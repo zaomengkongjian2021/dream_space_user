@@ -1,0 +1,615 @@
+
+/*对element-ui的改动*/
+.el-message{
+	min-width: 60%;
+}
+.el-loading-mask{
+	background-color: rgba(0, 0, 0, 0.6);
+}
+.el-message-box{
+	width: 80%;
+}
+ul,li{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+/*公共样式*/
+uni-page-body, uni-page-refresh{
+	height: 100%;
+	overflow: hidden;
+	font-size: 14px;
+}
+.content {
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		height: 100%;
+		width: 100%;
+		background: url(../static/index-bg.jpg) no-repeat center;
+		background-size: cover;
+		.login-box, .regist-box{
+			width: 90%;
+			background: linear-gradient(295deg, #ff7700, #ff9f16);
+			margin-top: 15%;
+			padding: 20px;
+			box-sizing: border-box;
+			box-shadow: 4px 4px 5px #e8692f;
+			border-radius: 10px;
+			.login-row, .regist-row{
+				width: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: space-between;
+				color: #FFFFFF;
+				margin-bottom: 20px;
+				span{
+					display: block;
+					width: 80px;
+				}
+				input{
+					flex: 1;
+					color: #FFFFFF;
+					border: 1px solid #FFFFFF;
+					border-radius: 5px;
+					height: 30px;
+					padding: 0 15px;
+					background: #FFFFFF;
+					color: #1c1c1c;
+				}
+				.login-btn, .regist-btn{
+					color: #f1f1f1;
+					background-color: transparent;
+					border: 1px solid #ffffff;
+					box-shadow: 0px 0px 2px 2px #d1d1d1;
+					width: 40%;
+					margin: 5px 30%;
+					&:active{
+						opacity: 0.6;
+					}
+				}
+				a{
+					color: #FFFFFF;
+					text-decoration: underline;
+					display: block;
+					width: 100%;
+					text-align: right;
+					&:active{
+						opacity: 0.6;
+					}
+				}
+			}
+		}
+	}
+	.loading-tips{
+		text-align: center;
+		margin-top: 40%;
+	}
+	/*nav导航*/
+	.nav{
+		.nav-main{
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 50px;
+			top: 0;
+			overflow: hidden;
+		}
+		.nav-footer{
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 3px 8%;
+			box-shadow: 1px 2px 2px 2px #666666;
+			background: #FFFFFF;
+			p{
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				color: #606266;
+				font-size: 14px;
+				i{
+					font-size: 26px;
+				}
+			}
+			p.active-nav{
+				color: #0080ff;
+				font-weight: 700;
+			}
+		}
+	}
+	/*商品列表页*/
+	.goods-list{
+		.list-box{
+			position: absolute;
+			top: 50px;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: #f1f1f1;
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
+		.goods-search{
+			display: flex;
+			align-items: center;
+			padding: 5px 15px;
+		}
+		.el-card{
+			margin: 6px;
+			.el-card__body{
+				padding: 0;
+				padding-bottom: 10px;
+				display: flex;
+				flex-direction: column;
+				img{
+					width: 100%;
+				}
+				p{
+					padding: 5px 10px;
+				}
+				.goods-describe{
+					font-size: 12px;
+					color: #FFFFFF;
+					background: #ffcf00;
+					padding: 2px 10px;
+				}
+				.goods-name{
+					font-weight: 600;
+				}
+				.goods-monny{
+					a{
+						display: block;
+						font-size: 8px;
+						line-height: 20px;
+						color: #d01012;
+						span:nth-of-type(2){
+							font-size: 12px;
+							font-weight: 600;
+							i{
+								font-size: 6px;
+								font-weight: normal;
+							}
+						}
+					}
+					.buy-monny{
+						color: #888888;
+					}
+				}
+			}
+		}
+		.integral-shop{
+			position: absolute;
+			top: 10%;
+			left: 0;
+			color: #FFFFFF;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			opacity: 0.9;
+			z-index: 99;
+			img{
+				height: 40px;
+				border-radius: 5px;
+			}
+			span{
+				font-size: 10px;
+				font-weight: 700;
+				display: block;
+				text-align: center;
+				padding: 2px 10px;
+				background: #0080ff;
+				border-radius: 10px;
+			}
+		}
+		.integral-shop-detail{
+			.el-col{
+				margin: 2%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				border: 1px dashed #dddddd;
+				background: #F5F5F5;
+				padding: 10px;
+				.top{
+					background: #0080ff;
+					padding: 5px 10px;
+					border-radius: 5px;
+					color: #FFFFFF;
+					span:nth-of-type(1){
+						font-size: 22px;
+						font-weight: 700;
+						padding-right: 5px;
+					}
+				}
+				.bottom{
+					margin-top: 10px;
+					span:nth-of-type(2){
+						font-size: 16px;
+						font-weight: 700;
+					}
+				}
+			}
+			.tips{
+				background: none;
+				border: none;
+				display: block;
+				font-size: 12px;
+				i{
+					color: #0080ff;
+				}
+			}
+		}
+	}
+	/*商品详情页*/
+	.goods-detail{
+		.detail-content{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 40px;
+			overflow: hidden;
+			overflow-y: auto;
+		}
+		.swiper{
+			img{
+				width: 100%;
+			}
+			.uni-swiper-dot-active {
+			    background-color: #fb6600;
+			    opacity: 0.6;
+			}
+		}
+		.detail-title{
+			padding: 20px 0px 10px;
+			margin: 0 10px;
+			font-size: 18px;
+			font-weight: 600;
+			border-bottom: 1px solid #dddddd;
+		}
+		.detail-describe{
+			font-size: 14px;
+			line-height: 30px;
+			color: #777777;
+			margin: 0 10px;
+		}
+		.type-lable{
+			margin: 20px 10px 0;
+			.el-button{
+				padding: 5px 10px;
+				font-size: 8px;
+			}
+		}
+		.detail-message{
+			margin: 10px 0 20px;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			.el-col{
+				padding: 5px 10px;
+				font-size: 14px;
+			}
+			.el-col-24{
+				background: #F5F5F5;
+			}
+			.add-union{
+				width: 60%;
+				height: 28px;
+				padding: 0;
+				background: #fb6600;
+				color: #FFFFFF;
+				border: 1px solid #fb6600;
+				&:active{
+					opacity: 0.8;
+				}
+			}
+		}
+		.bottom-btn{
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 40px;
+			.el-button{
+				width: 100%;
+				height: 40px;
+				border: none;
+				color: #fb6600;
+				background: #F5F5F5;
+				border-radius: 0;
+				&:active{
+					opacity: 0.8;
+				}
+			}
+		}
+	}
+	/*联盟页面*/
+	.union-area.union-bg{
+		background: url(../static/unionArea-bg.jpg) no-repeat center;
+	}
+	.union-area{
+		background-size: cover;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		overflow: hidden;
+		.union-box{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 45px;
+			overflow: hidden;
+			overflow-y: auto;
+		}
+		.visitor-model{
+			background: url(../static/visitor-bg.jpg) no-repeat center;
+			background-size: cover;
+			margin: 20px;
+			padding: 15px;
+			border-radius: 20px;
+			line-height: 30px;
+			font-size: 14px;
+			.visitor-title{
+				font-size: 16px;
+			line-height: 30px;
+				font-weight: 700;
+			}
+			span{
+				color: #d01012;
+			}
+			a{
+				color: #0080ff;
+				text-decoration: underline;
+			}
+		}
+		.vip-model{
+			.vip-box{
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				padding-bottom: 20px;
+				.el-col{
+					padding: 5px 15px;
+					display: flex;
+					align-items: center;
+				}
+				.vip-title{
+					font-size: 16px;
+					background: #f5f5f5;
+					font-weight: 700;
+					display: flex;
+					justify-content: space-between;
+					i{
+						color: #0080ff;
+					}
+				}
+				.el-button{
+					width: 80px;
+					height: 30px;
+					padding: 0;
+					border-color: #fb6600;
+					color: #fb6600;
+				}
+				.el-button:active{
+					opacity: 0.6;
+				}
+				.goodLuck-message{
+					font-size: 14px;
+					p{
+						line-height: 30px;
+						span{
+							color: #00FF00;
+						}
+					}
+				}
+			}
+		}
+		.dialog-detail{
+			max-height: 300px;
+			overflow-y: auto;
+			span{
+				color: #d01012;
+			}
+			.el-col{
+				padding: 5px 0;
+			}
+		}
+		.bottom-btn{
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			.ad-union-btn{
+				width: 80%;
+				margin: 0 10% 0;
+				border-radius: 5px;
+				font-size: 18px;
+				background: #fb6600 !important;
+				border: none !important;
+				color: #FFFFFF !important;
+			}
+			.ad-union-btn:active{
+				opacity: 0.6;
+			}
+		}
+	}
+	
+	/*个人中心*/
+	.my-center{
+		height: 100%;
+		background: url(../static/my-center1.jpg) no-repeat top;
+		background-color: #F1F1F1;
+		background-size: contain;
+		overflow: hidden;
+		overflow-y: auto;
+		.center-title{
+			font-size: 16px;
+			font-weight: 600;
+		}
+		.my-deposit{
+			width: 96%;
+			background: #FFFFFF;
+			padding: 10px 20px;
+			border-radius: 10px;
+			margin: 20% 2% 5% 2%;
+			.deposit-content{
+				margin: 20px 0;
+				text-align: center;
+				a{
+					color: #666666;
+				}
+				span{
+					font-weight: 600;
+				}
+			}
+			.deposit-bottom{
+				display: flex;
+				justify-content: flex-end;
+				.el-button{
+					border: 1px solid #fb6600;
+					border-radius: 10px;
+					padding: 5px 20px;
+					color: #fb6600;
+				}
+				.el-button:active{
+					opacity: 0.6;
+				}
+			}
+		}
+		.my-order{
+			width: 96%;
+			background: #FFFFFF;
+			padding: 10px 20px;
+			border-radius: 10px;
+			margin: 0 2% 5% 2%;
+			.order-label{
+				display: flex;
+				justify-content: space-around;
+				p{
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					margin: 20px 0;
+					position: relative;
+					i{
+						font-size: 27px;
+						font-weight: 700;
+						color: #172033;
+					}
+					span{
+						padding: 3px 0;
+					}
+					a{
+						display: block;
+						position: absolute;
+						top: -10px;
+						right: -10px;
+						background: #ff0909;
+						padding: 0 5px;
+						border-radius: 10px;
+						color: #FFFFFF;
+						font-size: 12px;
+					}
+				}
+			}
+		}
+		.my-other{
+			width: 96%;
+			background: #FFFFFF;
+			padding: 10px 20px;
+			border-radius: 10px;
+			margin: 0 2% 5% 2%;
+			.el-col{
+				background: #FFFFFF;
+				border-radius: 20px;
+				padding: 10px 10px;
+				border-bottom: 1px solid #dddddd;
+				display: flex;
+				justify-content: space-between;
+			}
+		}
+	}
+	
+/*造梦积分抽奖*/
+.lucky-draw{
+	.el-dialog__header{
+		display: none;
+	}
+	.el-dialog__body{
+		padding: 0;
+		position: relative;
+	}
+	.bg-video{
+		height: 50vh;
+		uni-video{
+			width: 100%;
+			height: 50vh;
+		}
+		.uni-video-bar{
+			display: none !important;
+		}
+	}
+	.lucky-draw-content{
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 30px;
+		.el-col{
+			text-align: center;
+			.el-button{
+				background-color: rgba(30, 3, 64, 0.5);
+				padding: 8px 20px;
+				font-size: 15px;
+				color: #ffffff;
+				margin: 0 20px;
+				&:active{
+					opacity: 0.6;
+				}
+			}
+		}
+	}
+	.lucky-draw-results{
+		position: absolute;
+		top: 0;
+		bottom: 45px;
+		left: 0;
+		right: 0;
+		background: transparent;
+		padding: 4% 4%;
+		ul{
+			height: 92%;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+			background: transparent;
+		}
+		li{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			width: 18%;
+			height: 46%;
+			margin: 1%;
+			background-color: rgba(30, 30, 124, 0.5);
+			color: #FFFFFF;
+			border: 3px solid rgba(255, 255, 255, 0.5);
+			border-radius: 8px;
+			box-sizing: border-box;
+		}
+	}
+}

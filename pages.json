@@ -1,0 +1,53 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "造梦空间"
+			}
+		},
+		{
+			"path": "pages/regist/regist",
+			"style": {
+				"navigationBarTitleText": "注 册"
+			}
+		},
+		{
+			"path": "pages/nav/nav",
+			"style": {
+				"navigationBarTitleText": "玩具天地"
+			}
+		},
+		{
+			"path": "pages/goodsList/goodsList",
+			"style": {
+				"navigationBarTitleText": "玩具天地"
+			}
+		},
+		{
+			"path": "pages/goodsDetail/goodsDetail",
+			"style": {
+				"navigationBarTitleText": "玩具天地"
+			}
+		},
+		{
+			"path": "pages/unionArea/unionArea",
+			"style": {
+				"navigationBarTitleText": "联盟中心"
+			}
+		},
+		{
+			"path": "pages/myCenter/myCenter",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "造梦空间",
+		"navigationBarBackgroundColor": "#fb6600",
+		"backgroundColor": "#fb6600",
+		"height": "50px"
+	}
+}
