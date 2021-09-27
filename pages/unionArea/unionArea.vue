@@ -146,7 +146,6 @@
 			<div class="lucky-draw-results">
 				<ul>
 					<li>1111</li>
-					<!-- <li>1111</li>
 					<li>1111</li>
 					<li>1111</li>
 					<li>1111</li>
@@ -154,7 +153,8 @@
 					<li>1111</li>
 					<li>1111</li>
 					<li>1111</li>
-					<li>1111</li> -->
+					<li>1111</li>
+					<li>1111</li>
 				</ul>
 			</div>
 		</el-dialog>
