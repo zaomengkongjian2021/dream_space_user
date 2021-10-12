@@ -12,7 +12,6 @@
 				<p>6、联盟成员可体验、购买、竞拍<span>珍藏版和限量版商品</span>。</p>
 				<p>7、联盟成员身份<span>有效期一年</span>。</p>
 			</el-col>
-			
 			<el-col class="visitor-title">怎样加入造梦联盟</el-col>
 			<el-col>
 				<p><span>购买联盟令牌</span>即可加入联盟。</p>
@@ -35,7 +34,7 @@
 					<a plain>我的奖品：</a><el-button plain>查看奖品</el-button>
 				</el-col>
 				<el-col :span="12" style="justify-content: flex-end;">
-					<el-button plain @click="luckyDraw.dialogVisible=true;">去抽奖</el-button>
+					<el-button plain @click="openLuckyDraw">去抽奖</el-button>
 				</el-col>
 				<!-- <el-col :span="12">
 					<a>今日可抽奖次数：</a><span>{{user.today_lucky_times}}</span>
@@ -45,7 +44,7 @@
 				</el-col>
 			</div>
 			<div class="vip-box">
-				<el-col class="vip-title" :span="24">盲选<i class="el-icon-question" @click="BlindChooseDetailDialogVisible=true;"></i></el-col>
+				<el-col class="vip-title" :span="24">盲选<i class="el-icon-question" @click="blindChooseDetailDialogVisible=true;"></i></el-col>
 				<el-col :span="15">
 					<a>我的商品券：</a><el-button plain>查看</el-button>
 				</el-col>
@@ -93,7 +92,7 @@
 		<!-- 造梦积分盲选规则介绍 -->
 		<el-dialog
 		  title="造梦积分盲选介绍"
-		  :visible.sync="BlindChooseDetailDialogVisible"
+		  :visible.sync="blindChooseDetailDialogVisible"
 		  width="90%">
 		  <el-row class="dialog-detail">
 				<el-col>
@@ -128,7 +127,7 @@
 				<el-col>7、联盟成员身份<span>有效期一年</span>。</el-col>
 			</el-row>
 		</el-dialog>
-		<!-- 抽奖页面 -->
+		<!-- 积分抽奖页面 -->
 		<el-dialog
 			title=""
 			:visible.sync="luckyDraw.dialogVisible"
@@ -139,24 +138,27 @@
 			</div>
 			<el-row class="lucky-draw-content">
 				<el-col>
-					<el-button plain>抽奖1次</el-button>
-					<el-button plain>抽奖10次</el-button>
+					<el-button plain @click="createLucky1(1)">抽奖1次</el-button>
+					<el-button plain @click="createLucky1(10)">抽奖10次</el-button>
 				</el-col>
 			</el-row>
-			<div class="lucky-draw-results">
-				<ul>
-					<li>1111</li>
-					<li>1111</li>
-					<li>1111</li>
-					<li>1111</li>
-					<li>1111</li>
-					<li>1111</li>
-					<li>1111</li>
-					<li>1111</li>
-					<li>1111</li>
-					<li>1111</li>
-				</ul>
+			<div class="lucky-draw-results"></div>
+		</el-dialog>
+		<!-- 盲选页面 -->
+		<el-dialog
+			title=""
+			:visible.sync="blindChoose.dialogVisible"
+			width="100%"
+			class="lucky-draw">
+			<div class="bg-video">
+				<video src="../../static/video/lucky_draw.mp4" autoplay loop object-fit="fill"></video>
 			</div>
+			<el-row class="lucky-draw-content">
+				<el-col>
+					<el-button plain @click="createBlindChoose">开始</el-button>
+				</el-col>
+			</el-row>
+			<div class="lucky-draw-results"></div>
 		</el-dialog>
 	</view>
 </template>
@@ -177,23 +179,68 @@
 				loading: false,
 				btnName: "购买联盟令牌（￥399）",
 				oneYuanDetailDialogVisible: false,
-				BlindChooseDetailDialogVisible: false,
+				blindChooseDetailDialogVisible: false,
 				unionAreaCountDialogVisible: false,
 				dueToTime: 0,
 				luckyDraw: {
+					dialogVisible: false,
+					count: 1
+				},
+				blindChoose: {
 					dialogVisible: false,
 					count: 1
 				}
 			}
 		},
 		methods:{
-			//一元抽奖
+			//盲选生成选项
+			createBlindChoose(){
+				
+			},
+			//积分抽奖生成奖项
+			createLucky1(num){
+				this.luckyDraw.count = num;
+				let ul = $(".lucky-draw-results");
+				ul.html("");
+				this.animateFun(num, 0);
+			},
+			//生成奖项的动画
+			animateFun(num, i){
+				if(i < num){
+					let li = $("<li></li>");
+					li.html(i+11);
+					li.appendTo($(".lucky-draw-results"));
+					li.animate({}, ()=>{
+						li.css({transform: "scale(1)"});
+						let top = 0, left = 0, bottom = 0;
+						if(i > 4){
+							bottom = 0;
+							left = ((i-5)*20.4)+"%";
+							li.animate({bottom: bottom,left: left,"margin-top": 0,"margin-left": 0}, 300, ()=>{
+								this.animateFun(num, i+1);
+							})
+						}else if(i<=4 && num>1){
+							top = 0;
+							left = (i*20.4)+"%";
+							li.animate({top: top,left: left,"margin-top": 0,"margin-left": 0}, 300, ()=>{
+								this.animateFun(num, i+1);
+							})
+						}
+					})
+				}
+			},
+			//打开抽奖框
+			openLuckyDraw(){
+				$(".lucky-draw-results").html("");
+				this.luckyDraw.dialogVisible=true;
+			},
+			//积分抽奖
 			oneYuanDetail(){
 				this.oneYuanDetailDialogVisible = true;
 			},
 			//盲选活动
 			BlindChooseDetail(){
-				this.BlindChooseDetailDialogVisible = true;
+				this.blindChooseDetailDialogVisible = true;
 			},
 			//打开充值框
 			openRecharge(){
