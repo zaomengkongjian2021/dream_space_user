@@ -611,3 +611,15 @@ uni-page-body, uni-page-refresh{
 		}
 	}
 }
+/*充值弹框*/
+.recharge-dialog{
+	.el-col{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 50px;
+		.el-button{
+			width: 90%;
+		}
+	}
+}

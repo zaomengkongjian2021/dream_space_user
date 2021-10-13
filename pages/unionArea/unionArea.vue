@@ -10,7 +10,6 @@
 				<p>4、联盟成员可<span>参与造梦积分盲选</span>，<a @click="BlindChooseDetail">查看详情</a></p>
 				<p>5、联盟成员可参与“置换商品”竞拍，每月都会有一批商品进行<span>超低价竞拍</span>。</p>
 				<p>6、联盟成员可体验、购买、竞拍<span>珍藏版和限量版商品</span>。</p>
-				<p>7、联盟成员身份<span>有效期一年</span>。</p>
 			</el-col>
 			<el-col class="visitor-title">怎样加入造梦联盟</el-col>
 			<el-col>
@@ -67,13 +66,33 @@
 		</el-row>
 		<!-- 按钮 -->
 		<el-row v-if="isVisitor || !user.no_overdue" class="bottom-btn">
-			<el-button plain class="ad-union-btn" @click="openRecharge">{{btnName}}</el-button>
+			<el-button plain class="ad-union-btn" @click="chooseRechargeDialogVisible=true">{{btnName}}</el-button>
 		</el-row>
+		<el-dialog
+			title="购买联盟令牌"
+			:visible.sync="chooseRechargeDialogVisible"
+			width="90%"
+		>
+			<el-row class="recharge-dialog">
+				<el-col :span="12">
+					<el-button @click="openRecharge(1, 58)"><span style="font-weight: 700;">1个月</span>(￥58)</el-button>
+				</el-col>
+				<el-col :span="12">
+					<el-button @click="openRecharge(3, 165)"><span style="font-weight: 700;">3个月</span>(￥165)</el-button>
+				</el-col>
+				<el-col :span="12">
+					<el-button @click="openRecharge(6, 313)"><span style="font-weight: 700;">6个月</span>(￥313)</el-button>
+				</el-col>
+				<el-col :span="12">
+					<el-button @click="openRecharge(12, 591)"><span style="font-weight: 700;">12个月</span>(￥591)</el-button>
+				</el-col>
+			</el-row>
+		</el-dialog>
 		<!-- 造梦积分抽奖规则介绍 -->
 		<el-dialog
-		  title="造梦积分抽奖介绍"
-		  :visible.sync="oneYuanDetailDialogVisible"
-		  width="90%">
+			title="造梦积分抽奖介绍"
+			:visible.sync="oneYuanDetailDialogVisible"
+			width="90%">
 		  <el-row class="dialog-detail">
 				<el-col>
 					1、<span>消耗20点造梦积分</span>可进行一次抽奖。
@@ -91,10 +110,10 @@
 		</el-dialog>
 		<!-- 造梦积分盲选规则介绍 -->
 		<el-dialog
-		  title="造梦积分盲选介绍"
-		  :visible.sync="blindChooseDetailDialogVisible"
-		  width="90%">
-		  <el-row class="dialog-detail">
+			title="造梦积分盲选介绍"
+			:visible.sync="blindChooseDetailDialogVisible"
+			width="90%">
+			  <el-row class="dialog-detail">
 				<el-col>
 					1、<span>消耗200点造梦积分</span>，<span>100%</span>随机获得一张商品免费体验券。
 				</el-col>
@@ -124,7 +143,6 @@
 				<el-col>4、联盟成员可<span>参与造梦积分盲选</span>，<a @click="BlindChooseDetail">查看详情</a></el-col>
 				<el-col>5、联盟成员可参与“置换商品”竞拍，每月都会有一批商品进行<span>超低价竞拍</span>。</el-col>
 				<el-col>6、联盟成员可体验、购买、竞拍<span>珍藏版和限量版商品</span>。</el-col>
-				<el-col>7、联盟成员身份<span>有效期一年</span>。</el-col>
 			</el-row>
 		</el-dialog>
 		<!-- 积分抽奖页面 -->
@@ -177,10 +195,11 @@
 				isVip: false,
 				isAdmin: false,
 				loading: false,
-				btnName: "购买联盟令牌（￥399）",
+				btnName: "购买联盟令牌",
 				oneYuanDetailDialogVisible: false,
 				blindChooseDetailDialogVisible: false,
 				unionAreaCountDialogVisible: false,
+				chooseRechargeDialogVisible: false,
 				dueToTime: 0,
 				luckyDraw: {
 					dialogVisible: false,
@@ -251,23 +270,21 @@
 				this.blindChooseDetailDialogVisible = true;
 			},
 			//打开充值框
-			openRecharge(){
-				this.$confirm('您将支付399元购买联盟令牌，是否确定？', '提示', {
+			openRecharge(num, cost){
+				this.$confirm('您将支付'+cost+'元购买'+num+'个月的联盟令牌，是否确定？', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(({ value }) => {
 					let item = {...this.user};
-					item.due_to = (new Date()).getTime() + 365*24*60*60*1000;
+					item.due_to = (new Date()).getTime() + 30*num*24*60*60*1000;
 					if(this.isVisitor){
-						// item.today_lucky_times = 3;
 						item.user_type = "vip";
 						item.lucky_integral = 0;
 						item.energy_integral = 0;
 						item.zaomeng_integral = 0;
 						item.no_overdue = true;
 					}else if(this.isVip){
-						// item.today_lucky_times = item.today_lucky_times;
 						item.lucky_integral = item.lucky_integral;
 						item.energy_integral = item.energy_integral;
 						item.zaomeng_integral = item.zaomeng_integral;
@@ -281,6 +298,7 @@
 						backFun: ["init"]
 					}
 					this.$emit("submitUser", params);
+					this.chooseRechargeDialogVisible = false;
 				}).catch(() => {});
 			},
 			//初始化
@@ -319,7 +337,7 @@
 				const nowTime = (new Date()).getTime();
 				if(nowTime>this.user.due_to && this.user.no_overdue){
 					this.user.no_overdue = false;
-					this.btnName = "联盟令牌续费（￥399）";
+					this.btnName = "联盟令牌续费";
 					let item = {...this.user};
 					const params = {
 						item: item,
