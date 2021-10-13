@@ -49,7 +49,7 @@
 					<a>我的商品券：</a><el-button plain>查看</el-button>
 				</el-col>
 				<el-col :span="9" style="justify-content: flex-end;">
-					<el-button plain>去盲选</el-button>
+					<el-button plain @click="openBlindChoose">去盲选</el-button>
 				</el-col>
 				<el-col :span="24">
 					<a>能量值：</a><span>{{user.energy_integral}}</span>
@@ -66,7 +66,7 @@
 			</div>
 		</el-row>
 		<!-- 按钮 -->
-		<el-row v-if="isVisitor || !user.isvip" class="bottom-btn">
+		<el-row v-if="isVisitor || !user.no_overdue" class="bottom-btn">
 			<el-button plain class="ad-union-btn" @click="openRecharge">{{btnName}}</el-button>
 		</el-row>
 		<!-- 造梦积分抽奖规则介绍 -->
@@ -149,16 +149,16 @@
 			title=""
 			:visible.sync="blindChoose.dialogVisible"
 			width="100%"
-			class="lucky-draw">
+			class="blind-choose">
 			<div class="bg-video">
 				<video src="../../static/video/lucky_draw.mp4" autoplay loop object-fit="fill"></video>
 			</div>
-			<el-row class="lucky-draw-content">
+			<el-row class="blind-choose-content">
 				<el-col>
-					<el-button plain @click="createBlindChoose">开始</el-button>
+					<el-button plain @click="createBlindChoose(10)">开始</el-button>
 				</el-col>
 			</el-row>
-			<div class="lucky-draw-results"></div>
+			<div class="blind-choose-results"></div>
 		</el-dialog>
 	</view>
 </template>
@@ -194,22 +194,25 @@
 		},
 		methods:{
 			//盲选生成选项
-			createBlindChoose(){
-				
+			createBlindChoose(num){
+				this.blindChoose.count = num;
+				let ul = $(".blind-choose-results");
+				ul.html("");
+				this.animateFun(num, 0, ul);
 			},
 			//积分抽奖生成奖项
 			createLucky1(num){
 				this.luckyDraw.count = num;
 				let ul = $(".lucky-draw-results");
 				ul.html("");
-				this.animateFun(num, 0);
+				this.animateFun(num, 0, ul);
 			},
 			//生成奖项的动画
-			animateFun(num, i){
+			animateFun(num, i, box){
 				if(i < num){
 					let li = $("<li></li>");
 					li.html(i+11);
-					li.appendTo($(".lucky-draw-results"));
+					li.appendTo(box);
 					li.animate({}, ()=>{
 						li.css({transform: "scale(1)"});
 						let top = 0, left = 0, bottom = 0;
@@ -217,13 +220,13 @@
 							bottom = 0;
 							left = ((i-5)*20.4)+"%";
 							li.animate({bottom: bottom,left: left,"margin-top": 0,"margin-left": 0}, 300, ()=>{
-								this.animateFun(num, i+1);
+								this.animateFun(num, i+1, box);
 							})
 						}else if(i<=4 && num>1){
 							top = 0;
 							left = (i*20.4)+"%";
 							li.animate({top: top,left: left,"margin-top": 0,"margin-left": 0}, 300, ()=>{
-								this.animateFun(num, i+1);
+								this.animateFun(num, i+1, box);
 							})
 						}
 					})
@@ -233,6 +236,11 @@
 			openLuckyDraw(){
 				$(".lucky-draw-results").html("");
 				this.luckyDraw.dialogVisible=true;
+			},
+			//打开盲选框
+			openBlindChoose(){
+				$(".blind-choose-results").html("");
+				this.blindChoose.dialogVisible=true;
 			},
 			//积分抽奖
 			oneYuanDetail(){
@@ -257,13 +265,13 @@
 						item.lucky_integral = 0;
 						item.energy_integral = 0;
 						item.zaomeng_integral = 0;
-						item.isvip = true;
+						item.no_overdue = true;
 					}else if(this.isVip){
 						// item.today_lucky_times = item.today_lucky_times;
 						item.lucky_integral = item.lucky_integral;
 						item.energy_integral = item.energy_integral;
 						item.zaomeng_integral = item.zaomeng_integral;
-						item.isvip = true;
+						item.no_overdue = true;
 					};
 					const params = {
 						item: item,
@@ -309,8 +317,8 @@
 			//判断令牌是否过期
 			judgeVip(){
 				const nowTime = (new Date()).getTime();
-				if(nowTime>this.user.due_to && this.user.isvip){
-					this.user.isvip = false;
+				if(nowTime>this.user.due_to && this.user.no_overdue){
+					this.user.no_overdue = false;
 					this.btnName = "联盟令牌续费（￥399）";
 					let item = {...this.user};
 					const params = {

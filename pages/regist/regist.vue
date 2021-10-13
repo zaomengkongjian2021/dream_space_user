@@ -90,7 +90,7 @@
 					phone: this.userName,
 					password: this.$md5(this.password),
 					user_type: "visitor",
-					isvip: false
+					no_overdue: false
 				}).then((res) => {
 					this.loading = false;
 					this.$message.success("注册成功");

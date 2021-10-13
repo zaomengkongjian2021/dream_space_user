@@ -543,7 +543,7 @@ uni-page-body, uni-page-refresh{
 	}
 	
 /*造梦积分抽奖*/
-.lucky-draw{
+.lucky-draw, .blind-choose{
 	.el-dialog__header{
 		display: none;
 	}
@@ -561,7 +561,7 @@ uni-page-body, uni-page-refresh{
 			display: none !important;
 		}
 	}
-	.lucky-draw-content{
+	.lucky-draw-content, .blind-choose-content{
 		position: absolute;
 		left: 0;
 		right: 0;
@@ -580,7 +580,7 @@ uni-page-body, uni-page-refresh{
 			}
 		}
 	}
-	.lucky-draw-results{
+	.lucky-draw-results, .blind-choose-results{
 		position: absolute;
 		top: 0;
 		bottom: 65px;
