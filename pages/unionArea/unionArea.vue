@@ -5,11 +5,11 @@
 			<el-col class="visitor-title">造梦联盟成员福利</el-col>
 			<el-col>
 				<p>1、联盟成员可开启<span>联盟任务</span>。</p>
-				<p>2、联盟成员完成普通任务获得的“造梦积分”均为<span>双倍，购买积分可获得1.5倍</span>。</p>
+				<p>2、联盟成员完成普通任务获得的“造梦积分”均为<span>1.5倍，购买积分可获得1.5倍</span>。</p>
 				<p>3、联盟成员可<span>参与造梦积分抽奖</span>，<a @click="oneYuanDetail">查看详情</a></p>
-				<p>4、联盟成员可<span>参与造梦积分盲选</span>，<a @click="BlindChooseDetail">查看详情</a></p>
-				<p>5、联盟成员可参与“置换商品”竞拍，每月都会有一批商品进行<span>超低价竞拍</span>。</p>
-				<p>6、联盟成员可体验、购买、竞拍<span>珍藏版和限量版商品</span>。</p>
+				<!-- <p>4、联盟成员可<span>参与造梦积分盲选</span>，<a @click="BlindChooseDetail">查看详情</a></p> -->
+				<p>4、联盟成员可参与“置换商品”竞拍，每月都会有一批商品进行<span>超低价竞拍</span>。</p>
+				<p>5、联盟成员可体验、购买、竞拍<span>珍藏版和限量版商品</span>。</p>
 			</el-col>
 			<el-col class="visitor-title">怎样加入造梦联盟</el-col>
 			<el-col>
@@ -38,11 +38,11 @@
 				<!-- <el-col :span="12">
 					<a>今日可抽奖次数：</a><span>{{user.today_lucky_times}}</span>
 				</el-col> -->
-				<el-col :span="24">
+				<!-- <el-col :span="24">
 					<a>幸运值：</a><span>{{user.lucky_integral}}</span>
-				</el-col>
+				</el-col> -->
 			</div>
-			<div class="vip-box">
+			<!-- <div class="vip-box">
 				<el-col class="vip-title" :span="24">盲选<i class="el-icon-question" @click="blindChooseDetailDialogVisible=true;"></i></el-col>
 				<el-col :span="15">
 					<a>我的商品券：</a><el-button plain>查看</el-button>
@@ -53,7 +53,7 @@
 				<el-col :span="24">
 					<a>能量值：</a><span>{{user.energy_integral}}</span>
 				</el-col>
-			</div>
+			</div> -->
 			<div class="vip-box">
 				<el-col class="vip-title" :span="24">好运速递</el-col>
 				<el-col class="goodLuck-message">
@@ -98,18 +98,18 @@
 					1、<span>消耗20点造梦积分</span>可进行一次抽奖。
 				</el-col>
 				<el-col>
-					2、惊喜奖品：免费体验券（只需押金），体验折扣券（3~9折），造梦积分（20~100点），超低价竞拍直拍券（出价后可立即支付获得拍卖商品），免费盲选券，广告跳过券，任务完成券。
+					2、惊喜奖品：造梦积分（5~100点），联盟任务积分倍数券（1.5~3倍，1~7天），普通商品体验折扣券（3~9.5折），珍贵商品体验折扣券（3~9.5折），普通商品免费体验券（只需押金）。
 				</el-col>
-				<el-col>
+				<!-- <el-col>
 					3、未抽中任何奖品时，可获得<span>幸运值</span>，<span>满幸运值</span>则下一次抽奖<span>必定中奖</span>。
-				</el-col>
+				</el-col> -->
 				<el-col>
-					4、使用免费体验券时，可自由选择一个商品，<span>体验3天</span>，<span>超出的时间</span>则直接从该商品的押金中<span>扣除一定的费用</span>（商品的每日体验价 X 超出天数）。
+					3、使用免费体验券时，可自由选择一个商品，<span>体验4天</span>，<span>超出的时间</span>则直接从该商品的押金中<span>扣除一定的费用</span>（商品的每日体验价 X 超出天数）。
 				</el-col>
 			</el-row>
 		</el-dialog>
 		<!-- 造梦积分盲选规则介绍 -->
-		<el-dialog
+		<!-- <el-dialog
 			title="造梦积分盲选介绍"
 			:visible.sync="blindChooseDetailDialogVisible"
 			width="90%">
@@ -118,7 +118,7 @@
 					1、<span>消耗200点造梦积分</span>，<span>100%</span>随机获得一张商品免费体验券。
 				</el-col>
 				<el-col>
-					2、<span>所有商品</span>均在盲选范围内。
+					2、<span>所有可体验的商品</span>均在盲选范围内，包括珍贵商品。
 				</el-col>
 				<el-col>
 					3、可使用<span>“免费盲选券”</span>进行盲选，不消耗造梦积分。
@@ -127,10 +127,10 @@
 					4、随机选中的商品，选择不体验时可获得<span>能量值，满能量值可自由选择一张商品免费体验券</span>，不返还消耗的造梦积分和“免费盲选券”。
 				</el-col>
 				<el-col>
-					5、使用商品免费体验券时，系统随机指定一个商品，可<span>体验3天</span>，<span>超出的时间</span>则直接从该商品的押金中<span>扣除一定的费用</span>（商品的每日体验价 X 超出天数）。
+					5、使用商品免费体验券时，系统随机指定一个商品，可<span>体验4天</span>，<span>超出的时间</span>则直接从该商品的押金中<span>扣除一定的费用</span>（商品的每日体验价 X 超出天数）。
 				</el-col>
 			</el-row>
-		</el-dialog>
+		</el-dialog> -->
 		<!-- 联盟福利介绍 -->
 		<el-dialog
 			title="联盟福利"
@@ -140,9 +140,9 @@
 				<el-col>1、联盟成员可开启<span>联盟任务</span>。</el-col>
 				<el-col>2、联盟成员完成普通任务获得的“造梦积分”均为<span>双倍</span>。</el-col>
 				<el-col>3、联盟成员可<span>参与造梦积分抽奖</span>，<a @click="oneYuanDetail">查看详情</a></el-col>
-				<el-col>4、联盟成员可<span>参与造梦积分盲选</span>，<a @click="BlindChooseDetail">查看详情</a></el-col>
-				<el-col>5、联盟成员可参与“置换商品”竞拍，每月都会有一批商品进行<span>超低价竞拍</span>。</el-col>
-				<el-col>6、联盟成员可体验、购买、竞拍<span>珍藏版和限量版商品</span>。</el-col>
+				<!-- <el-col>4、联盟成员可<span>参与造梦积分盲选</span>，<a @click="BlindChooseDetail">查看详情</a></el-col> -->
+				<el-col>4、联盟成员可参与“置换商品”竞拍，每月都会有一批商品进行<span>超低价竞拍</span>。</el-col>
+				<el-col>5、联盟成员可体验、购买、竞拍<span>珍藏版和限量版商品</span>。</el-col>
 			</el-row>
 		</el-dialog>
 		<!-- 积分抽奖页面 -->
@@ -152,7 +152,7 @@
 			width="100%"
 			class="lucky-draw">
 			<div class="bg-video">
-				<video src="../../static/video/lucky_draw.mp4" autoplay loop object-fit="fill"></video>
+				<video src="../../static/video/lucky_draw.mp4" autoplay loop object-fit="fill" v-show="showVodeo"></video>
 			</div>
 			<el-row class="lucky-draw-content">
 				<el-col>
@@ -163,7 +163,7 @@
 			<div class="lucky-draw-results"></div>
 		</el-dialog>
 		<!-- 盲选页面 -->
-		<el-dialog
+		<!-- <el-dialog
 			title=""
 			:visible.sync="blindChoose.dialogVisible"
 			width="100%"
@@ -177,7 +177,7 @@
 				</el-col>
 			</el-row>
 			<div class="blind-choose-results"></div>
-		</el-dialog>
+		</el-dialog> -->
 	</view>
 </template>
 
@@ -201,9 +201,11 @@
 				unionAreaCountDialogVisible: false,
 				chooseRechargeDialogVisible: false,
 				dueToTime: 0,
+				showVodeo: false,
 				luckyDraw: {
 					dialogVisible: false,
-					count: 1
+					count: 1,
+					awards: []
 				},
 				blindChoose: {
 					dialogVisible: false,
@@ -224,13 +226,33 @@
 				this.luckyDraw.count = num;
 				let ul = $(".lucky-draw-results");
 				ul.html("");
-				this.animateFun(num, 0, ul);
+				this.luckyDraw.awards = [];
+				document.querySelector("video").playbackRate = 2;
+				uniCloud.callFunction({
+					name: "create_lucky",
+					data: {count: num, phone: this.user.phone, user_id: this.user._id},
+					success: (res) => {
+						console.log("success")
+						this.luckyDraw.awards = res.result;
+						this.animateFun(num, 0, ul);
+						this.$nextTick(() => {
+							document.querySelector("video").playbackRate = 1;
+						})
+					},
+					fail: (err) => {
+						this.$nextTick(() => {
+							document.querySelector("video").playbackRate = 1;
+						})
+						console.log("fail")
+						console.log(err)
+					}
+				})
 			},
 			//生成奖项的动画
 			animateFun(num, i, box){
 				if(i < num){
 					let li = $("<li></li>");
-					li.html(i+11);
+					li.html(this.luckyDraw.awards[i].name);
 					li.appendTo(box);
 					li.animate({}, ()=>{
 						li.css({transform: "scale(1)"});
@@ -255,6 +277,12 @@
 			openLuckyDraw(){
 				$(".lucky-draw-results").html("");
 				this.luckyDraw.dialogVisible=true;
+				this.$nextTick(() => {
+					console.log(document.querySelector("video"))
+					document.querySelector("video").addEventListener('play', () => {
+						this.showVodeo = true;
+					}, false)
+				})
 			},
 			//打开盲选框
 			openBlindChoose(){
