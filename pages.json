@@ -27,7 +27,7 @@
 		{
 			"path": "pages/goodsDetail/goodsDetail",
 			"style": {
-				"navigationBarTitleText": "玩具天地"
+				"navigationBarTitleText": "商品详情"
 			}
 		},
 		{
@@ -48,6 +48,6 @@
 		"navigationBarTitleText": "造梦空间",
 		"navigationBarBackgroundColor": "#fb6600",
 		"backgroundColor": "#fb6600",
-		"height": "50px"
+		"height": "44px"
 	}
 }

@@ -25,8 +25,8 @@
 					<span style="color: #d01012;">{{"￥"+goodsData.prich}}</span>
 				</el-col>
 				<el-col :span="24">
-					<span>体验价：</span>
-					<span style="color: #80e010;">{{"￥"+goodsData.rent+"/次"+"+￥"+goodsData.every_day_rent+"/日"}}</span>
+					<span>体验：</span>
+					<span style="color: #80e010;">{{"￥"+goodsData.rent+"积分/次"}}</span>
 					<span>（联盟成员八折优惠）</span>
 				</el-col>
 				<el-col :span="24" style="margin-bottom: 10px;">
@@ -46,7 +46,7 @@
 					<span>发行年份：</span>
 					<span>{{goodsData.issue_year+"年"}}</span>
 				</el-col>
-				<el-col :span="12">
+				<el-col :span="12" v-if="this.user.user_type == 'visitor'">
 					<el-button class="add-union">加入联盟</el-button>
 				</el-col>
 			</el-row>
@@ -75,7 +75,8 @@
 				loading: false,
 				goodsData: {
 					img: []
-				}
+				},
+				user: {}
 			}
 		},
 		methods:{
@@ -96,6 +97,7 @@
 			}
 		},
 		created() {
+			this.user = JSON.parse(sessionStorage.getItem("user"));
 			this.goodsId = this.$route.query.id;
 			this.getGoodsDetail();
 		},

@@ -21,11 +21,11 @@
 							<p class="goods-monny">
 								<a class="buy-monny">
 									<span>购买价：</span>
-									<span>{{parseInt(item.prich*0.95)}}</span>
+									<span>￥{{parseInt(item.prich*0.95)}}</span>
 								</a>
 								<a>
-									<span>体验价：</span>
-									<span><i>￥</i>{{item.rent+"/次"}} + <i>￥</i>{{item.every_day_rent+"/日"}}</span>
+									<span>体验：</span>
+									<span>{{item.rent+"积分/次(7天)"}}</span>
 								</a>
 							</p>
 						</el-card>

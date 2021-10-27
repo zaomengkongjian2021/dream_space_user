@@ -21,6 +21,7 @@
 					np.path == "/pages/goodsDetail/goodsDetail"){
 					setTimeout(() => {
 						$("uni-page-head").css({display: "block"});
+						$(".uni-page-head__title").css({display: "block"});
 					}, 300)
 					return;
 				}

@@ -6,10 +6,11 @@
 			<el-col>
 				<p>1、联盟成员可开启<span>联盟任务</span>。</p>
 				<p>2、联盟成员完成普通任务获得的“造梦积分”均为<span>1.5倍，购买积分可获得1.5倍</span>。</p>
-				<p>3、联盟成员可<span>参与造梦积分抽奖</span>，<a @click="oneYuanDetail">查看详情</a></p>
+				<p>3、联盟成员可<span>参与造梦积分抽奖</span>，<a @click="oneYuanDetail" style="color: #007AFF;">查看详情</a></p>
 				<!-- <p>4、联盟成员可<span>参与造梦积分盲选</span>，<a @click="BlindChooseDetail">查看详情</a></p> -->
-				<p>4、联盟成员可参与“置换商品”竞拍，每月都会有一批商品进行<span>超低价竞拍</span>。</p>
+				<p>4、联盟成员可参与“置换商品”竞拍，不定时会有一批商品进行<span>超低价竞拍</span>。</p>
 				<p>5、联盟成员可体验、购买、竞拍<span>珍藏版和限量版商品</span>。</p>
+				<p>6、联盟成员消耗积分可参与<span>实体店每周组织的各项室内活动、室外活动，</span><a @click="offlineDetail" style="color: #007AFF;">查看详情</a>。</p>
 			</el-col>
 			<el-col class="visitor-title">怎样加入造梦联盟</el-col>
 			<el-col>
@@ -34,6 +35,20 @@
 				</el-col>
 				<el-col :span="12" style="justify-content: flex-end;">
 					<el-button plain @click="openLuckyDraw">去抽奖</el-button>
+				</el-col>
+				<!-- <el-col :span="12">
+					<a>今日可抽奖次数：</a><span>{{user.today_lucky_times}}</span>
+				</el-col> -->
+				<!-- <el-col :span="24">
+					<a>幸运值：</a><span>{{user.lucky_integral}}</span>
+				</el-col> -->
+			</div>
+			<div class="vip-box">
+				<el-col class="vip-title" :span="24">实体店活动<i class="el-icon-question" @click="offlineDetailDialogVisible=true;"></i></el-col>
+				<el-col v-for="(item,index) in offlineActivity" class="activity-list">
+					<span>{{item.time}}</span>
+					<span>{{item.name}}</span>
+					<span>{{item.province+item.city+item.region+item.address}}</span>
 				</el-col>
 				<!-- <el-col :span="12">
 					<a>今日可抽奖次数：</a><span>{{user.today_lucky_times}}</span>
@@ -104,7 +119,24 @@
 					3、未抽中任何奖品时，可获得<span>幸运值</span>，<span>满幸运值</span>则下一次抽奖<span>必定中奖</span>。
 				</el-col> -->
 				<el-col>
-					3、使用免费体验券时，可自由选择一个商品，<span>体验4天</span>，<span>超出的时间</span>则直接从该商品的押金中<span>扣除一定的费用</span>（商品的每日体验价 X 超出天数）。
+					3、使用免费体验券时，可自由选择一个商品，<span>体验7天</span>，<span>超出的时间</span>则直接从该商品的押金中<span>扣除一定的费用</span>，详见具体商品。
+				</el-col>
+			</el-row>
+		</el-dialog>
+		<!-- 线下实体店活动介绍 -->
+		<el-dialog
+			title="实体店活动介绍"
+			:visible.sync="offlineDetailDialogVisible"
+			width="90%">
+		  <el-row class="dialog-detail">
+				<el-col>
+					1、线下实体店会在<span>每周六、周日</span>组织活动，<span>联盟成员</span>可通过消耗一定的积分参与活动，<span>非联盟成员</span>需不可通过消耗积分参与活动。
+				</el-col>
+				<el-col>
+					2、每周六的活动为<span>“主题活动”</span>，本周的主题活动结束后，会宣布下一周的活动主题。
+				</el-col>
+				<el-col>
+					3、每周日的活动为<span>“室外活动”</span>，本周的室外活动结束后，会宣布下一周的活动内容。
 				</el-col>
 			</el-row>
 		</el-dialog>
@@ -127,7 +159,7 @@
 					4、随机选中的商品，选择不体验时可获得<span>能量值，满能量值可自由选择一张商品免费体验券</span>，不返还消耗的造梦积分和“免费盲选券”。
 				</el-col>
 				<el-col>
-					5、使用商品免费体验券时，系统随机指定一个商品，可<span>体验4天</span>，<span>超出的时间</span>则直接从该商品的押金中<span>扣除一定的费用</span>（商品的每日体验价 X 超出天数）。
+					5、使用商品免费体验券时，系统随机指定一个商品，可<span>体验7天</span>，<span>超出的时间</span>则直接从该商品的押金中<span>扣除一定的费用</span>（商品的每日体验价 X 超出天数）。
 				</el-col>
 			</el-row>
 		</el-dialog> -->
@@ -137,12 +169,13 @@
 			:visible.sync="unionAreaCountDialogVisible"
 			width="90%">
 			<el-row class="dialog-detail">
-				<el-col>1、联盟成员可开启<span>联盟任务</span>。</el-col>
-				<el-col>2、联盟成员完成普通任务获得的“造梦积分”均为<span>双倍</span>。</el-col>
-				<el-col>3、联盟成员可<span>参与造梦积分抽奖</span>，<a @click="oneYuanDetail">查看详情</a></el-col>
-				<!-- <el-col>4、联盟成员可<span>参与造梦积分盲选</span>，<a @click="BlindChooseDetail">查看详情</a></el-col> -->
-				<el-col>4、联盟成员可参与“置换商品”竞拍，每月都会有一批商品进行<span>超低价竞拍</span>。</el-col>
-				<el-col>5、联盟成员可体验、购买、竞拍<span>珍藏版和限量版商品</span>。</el-col>
+				<p>1、联盟成员可开启<span>联盟任务</span>。</p>
+				<p>2、联盟成员完成普通任务获得的“造梦积分”均为<span>1.5倍，购买积分可获得1.5倍</span>。</p>
+				<p>3、联盟成员可<span>参与造梦积分抽奖</span>，<a @click="oneYuanDetail" style="color: #007AFF;">查看详情</a></p>
+				<!-- <p>4、联盟成员可<span>参与造梦积分盲选</span>，<a @click="BlindChooseDetail">查看详情</a></p> -->
+				<p>4、联盟成员可参与“置换商品”竞拍，不定时会有一批商品进行<span>超低价竞拍</span>。</p>
+				<p>5、联盟成员可体验、购买、竞拍<span>珍藏版和限量版商品</span>。</p>
+				<p>6、联盟成员消耗积分可参与<span>实体店每周组织的各项室内活动、室外活动，</span><a @click="offlineDetail" style="color: #007AFF;">查看详情</a>。</p>
 			</el-row>
 		</el-dialog>
 		<!-- 积分抽奖页面 -->
@@ -200,6 +233,7 @@
 				blindChooseDetailDialogVisible: false,
 				unionAreaCountDialogVisible: false,
 				chooseRechargeDialogVisible: false,
+				offlineDetailDialogVisible: false,
 				dueToTime: 0,
 				showVodeo: false,
 				luckyDraw: {
@@ -210,7 +244,8 @@
 				blindChoose: {
 					dialogVisible: false,
 					count: 1
-				}
+				},
+				offlineActivity: []
 			}
 		},
 		methods:{
@@ -278,7 +313,6 @@
 				$(".lucky-draw-results").html("");
 				this.luckyDraw.dialogVisible=true;
 				this.$nextTick(() => {
-					console.log(document.querySelector("video"))
 					document.querySelector("video").addEventListener('play', () => {
 						this.showVodeo = true;
 					}, false)
@@ -292,6 +326,10 @@
 			//积分抽奖
 			oneYuanDetail(){
 				this.oneYuanDetailDialogVisible = true;
+			},
+			//线下活动详情
+			offlineDetail(){
+				this.offlineDetailDialogVisible = true;
 			},
 			//盲选活动
 			BlindChooseDetail(){
@@ -329,11 +367,26 @@
 					this.chooseRechargeDialogVisible = false;
 				}).catch(() => {});
 			},
+			//获取实体店活动列表
+			getOfflineActivity(){
+				this.offlineActivity = [];
+				const newTime = (new Date()).getTime();
+				db.collection("offline_activity").get().then(res => {
+					if(res.result.data.length){
+						res.result.data.forEach(item => {
+							if(newTime <= (new Date(item.time)).getTime()){
+								this.offlineActivity.push(item);
+							}
+						})
+					}
+				})
+			},
 			//初始化
 			init(){
 				if(this.user.due_to){
 					this.dueToTime = this.handleTime(this.user.due_to);
 					this.judgeVip();
+					this.getOfflineActivity();
 				}
 				if(this.user.user_type == "visitor"){//游客
 					this.isVisitor = true;
@@ -352,9 +405,9 @@
 			//时间转换
 			handleTime(t){
 				let tt = new Date(t),
-						y = tt.getFullYear(),
-						m = tt.getMonth()+1,
-						d = tt.getDate();
+					y = tt.getFullYear(),
+					m = tt.getMonth()+1,
+					d = tt.getDate();
 				if(m < 10){
 					m = "0" + m;
 				}
