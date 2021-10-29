@@ -42,7 +42,16 @@
 				"navigationBarTitleText": "我的"
 			}
 		}
-	],
+        ,{
+            "path" : "pages/myCommend/myCommend",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "造梦空间",
