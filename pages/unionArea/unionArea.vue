@@ -27,6 +27,12 @@
 				<el-col :span="24">
 					<a>造梦积分：</a><span>{{user.zaomeng_integral}}</span>
 				</el-col>
+				<el-col :span="12">
+					<a>可用押金：</a><span>{{user.deposit+"元"}}</span>
+				</el-col>
+				<el-col :span="12">
+					<a>冻结押金：</a><span>{{user.freeze_deposit+"元"}}</span>
+				</el-col>
 			</div>
 			<div class="vip-box">
 				<el-col class="vip-title" :span="24">抽奖<i class="el-icon-question" @click="oneYuanDetailDialogVisible=true;"></i></el-col>

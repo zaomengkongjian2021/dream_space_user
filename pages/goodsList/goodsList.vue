@@ -1,38 +1,27 @@
 <template>
 	<view class="goods-list" v-loading.fullscreen.lock="loading">
-		<unicloud-db
-			ref="udb"
-			v-slot:default="{data, loading, error, options}"
-			collection="goods"
-			@load="handleLoad"
-			>
-			<view v-if="error">{{error.message}}</view>
-			<view class="loading-tips" v-else-if="loading">正在加载...</view>
-			<view v-else>
-				<el-col :span="24" class="goods-search">
-					<el-input placeholder="请输入内容" v-model="searchValue" @change="goSearch" suffix-icon="el-icon-search"/>
-				</el-col>
-				<el-row class="list-box">
-					<el-col :span="12" v-for="(item,index) in goodsDatas" :key="item._id">
-						<el-card class="goodsList-card">
-							<img :src="item.img[0]" alt="" @click="openDetail(item)"/>
-							<p class="goods-describe">{{item.describe}}</p>
-							<p class="goods-name">{{item.name}}</p>
-							<p class="goods-monny">
-								<a class="buy-monny">
-									<span>购买价：</span>
-									<span>￥{{parseInt(item.prich*0.95)}}</span>
-								</a>
-								<a>
-									<span>体验：</span>
-									<span>{{item.rent+"积分/次(7天)"}}</span>
-								</a>
-							</p>
-						</el-card>
-					</el-col>
-				</el-row>
-			</view>
-		</unicloud-db>
+		<el-col :span="24" class="goods-search">
+			<el-input placeholder="请输入内容" v-model="searchValue" @change="goSearch" suffix-icon="el-icon-search"/>
+		</el-col>
+		<el-row class="list-box">
+			<el-col :span="12" v-for="(item,index) in goodsDatas" :key="item._id">
+				<el-card class="goodsList-card">
+					<img :src="item.img[0]" alt="" @click="openDetail(item)"/>
+					<p class="goods-describe">{{item.describe}}</p>
+					<p class="goods-name">{{item.name}}</p>
+					<p class="goods-monny">
+						<!-- <a class="buy-monny">
+							<span>购买价：</span>
+							<span>￥{{parseInt(item.deposit)}}</span>
+						</a> -->
+						<a>
+							<span>体验：</span>
+							<span>{{item.rent+"积分/次(7天)"}}</span>
+						</a>
+					</p>
+				</el-card>
+			</el-col>
+		</el-row>
 		<p class="integral-shop" @click="shopDialogVisible = true">
 			<img src="../../static/shop.jpg" alt="">
 			<span>购买积分</span>
@@ -95,24 +84,63 @@
 				integralCountDialog: false,
 				integralUnit: 1,
 				integralCount: 10,
-				integralBuyNum: 1
+				integralBuyNum: 1,
+				addGoods: [],
+				experience: ""
 			}
 		},
 		methods:{
-			handleLoad(){
-				this.goodsDatas = this.$refs.udb.dataList;
+			getGoods(val){
+				this.addGoods = [];
+				this.goodsDatas = [];
+				this.loading = true;
+				if(!this.experience){
+					db.collection("goods").get().then(res => {
+						this.loading = false;
+						if(res.result.data.length){
+							this.addGoods = res.result.data;
+							if(!val){
+								this.goodsDatas = res.result.data;
+							}else{
+								this.addGoods.forEach(item => {
+									if(item.name.indexOf(val) > -1){
+										this.goodsDatas.push(item);
+									}
+								})
+							}
+						}
+					}).catch(err => {
+						this.loading = false;
+					})
+				}else{
+					db.collection("goods").where({type: this.experience.type}).get().then(res => {
+						this.loading = false;
+						if(res.result.data.length){
+							this.addGoods = res.result.data;
+							if(!val){
+								this.goodsDatas = res.result.data;
+							}else{
+								this.addGoods.forEach(item => {
+									if(item.name.indexOf(val) > -1){
+										this.goodsDatas.push(item);
+									}
+								})
+							}
+						}
+					}).catch(err => {
+						this.loading = false;
+					})
+				}
 			},
 			goSearch(){
-				this.goodsDatas = [];
-				this.goodsDatas.length = 0;
-				this.$refs.udb.dataList.forEach(item => {
-					if(item.name.indexOf(this.searchValue) > -1){
-						this.goodsDatas.push(item);
-					}
-				})
+				this.getGoods(this.searchValue);
 			},
 			openDetail(item){
-				this.$router.push("/pages/goodsDetail/goodsDetail?id=" + item._id);
+				let path = "/pages/goodsDetail/goodsDetail?id="+item._id;
+				if(this.experience){
+					path = path + "&experience=" + JSON.stringify(this.experience);
+				}
+				this.$router.push(path);
 			},
 			openBuyDiaog(p, c){
 				this.integralUnit = p;
@@ -138,7 +166,7 @@
 			saveIntegral(i){
 				let item = {...this.user};
 				//区分vip和非vip，vip积分是1.5倍
-				if(item.user_type=="vip" && item.isvip){
+				if(item.user_type=="vip" && item.no_overdue){
 					item.zaomeng_integral = item.zaomeng_integral+i*1.5;
 				}else{
 					item.zaomeng_integral = item.zaomeng_integral+i;
@@ -151,9 +179,20 @@
 					close: ["integralCountDialog"]
 				}
 				this.$emit("submitUser", params);
+			},
+			init(){
+				if(this.$route.query.experience){
+					this.experience = JSON.parse(this.$route.query.experience)
+				}
+				this.getGoods();
 			}
 		},
-		created() {}
+		created() {
+			this.init();
+		},
+		activated() {
+			this.init();
+		}
 	}
 </script>
 

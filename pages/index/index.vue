@@ -58,7 +58,7 @@
 						const data = res.result.data;
 						if(data.length > 0){
 							if(this.$md5(this.password) == data[0].password){
-								sessionStorage.setItem("user", JSON.stringify(data[0]));
+								this.setSessionStorage("user", JSON.stringify(data[0]));
 								this.$router.push("/pages/nav/nav");
 							}else{
 								this.$message.error("密码错误");

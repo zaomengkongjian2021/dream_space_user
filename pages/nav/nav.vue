@@ -83,7 +83,7 @@
 						this.$refs[params.children].loading = false;
 						const data = res.result.data;
 						if(data.length > 0){
-							sessionStorage.setItem("user", JSON.stringify(data[0]));
+							this.setSessionStorage("user", JSON.stringify(data[0]));
 							this.user = data[0];
 							//回调
 							this.$nextTick(()=>{
@@ -103,7 +103,10 @@
 			}
 		},
 		created() {
-			this.user = JSON.parse(sessionStorage.getItem("user"));
+			this.user = JSON.parse(this.getSessionStorage("user"));
+			window.addEventListener("userChange", () => {
+				this.user = JSON.parse(this.getSessionStorage("user"));
+			})
 		}
 	}
 </script>
