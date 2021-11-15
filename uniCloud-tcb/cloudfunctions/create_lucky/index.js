@@ -13,7 +13,7 @@ exports.main = async (event, context) => {
 	};
 	if(jackpot.data.length){
 		for(let k=0; k<jackpot.data.length; k++){
-			if(jackpot.data[k].type=="FP" && jackpot.data[k].integral==10){
+			if(jackpot.data[k].type=="FP" && jackpot.data[k].integral==5){
 				default_obj = jackpot.data[k];
 				break;
 			}

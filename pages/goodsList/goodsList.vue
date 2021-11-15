@@ -22,7 +22,7 @@
 				</el-card>
 			</el-col>
 		</el-row>
-		<p class="integral-shop" @click="shopDialogVisible = true">
+		<p v-if="!experience" class="integral-shop" @click="shopDialogVisible = true">
 			<img src="../../static/shop.jpg" alt="">
 			<span>购买积分</span>
 		</p>

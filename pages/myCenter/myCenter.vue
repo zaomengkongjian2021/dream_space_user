@@ -282,6 +282,9 @@
 										this.loading = false;
 										this.$message.error("服务器错误");
 									})
+								}else{
+									this.$message.warning("当前任务积分为"+data.task_integral_multiple+"倍，任务积分券不可叠加使用。");
+									this.loading = false;
 								}
 							}else{
 								this.loading = false;

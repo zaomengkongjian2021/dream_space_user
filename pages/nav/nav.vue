@@ -53,11 +53,17 @@
 				let item = {...this.user};
 				delete item._id;
 				Object.assign(item, params.item);
-				this.$refs[params.children].loading = true;
+				if(this.$refs[params.children]){
+					this.$refs[params.children].loading = true;
+				}else{
+					return
+				}
 				db.collection("user_list").doc(this.user._id).update(item).then(res=>{
 					this.$refs[params.children].loading = false;
 					if(res.result.updated){
-						this.$message.success(params.success);
+						if(params.success){
+							this.$message.success(params.success);
+						}
 						//关闭弹框
 						if(params.close){
 							params.close.forEach(ct => {
@@ -66,7 +72,9 @@
 						}
 						this.updateUser(params);
 					}else{
-						this.$message.error(params.error);
+						if(params.error){
+							this.$message.error(params.error);
+						}
 					}
 				}).catch(err=>{
 					this.$refs[params.children].loading = false;

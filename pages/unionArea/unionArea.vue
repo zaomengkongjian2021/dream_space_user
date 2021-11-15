@@ -251,7 +251,8 @@
 					dialogVisible: false,
 					count: 1
 				},
-				offlineActivity: []
+				offlineActivity: [],
+				canClickLucky: true
 			}
 		},
 		methods:{
@@ -264,11 +265,25 @@
 			},
 			//积分抽奖生成奖项
 			createLucky1(num){
+				if(!this.canClickLucky){
+					return;
+				}
 				this.luckyDraw.count = num;
 				let ul = $(".lucky-draw-results");
 				ul.html("");
 				this.luckyDraw.awards = [];
 				document.querySelector("video").playbackRate = 2;
+				this.canClickLucky = false;
+				let userData = {...this.user};
+				userData.zaomeng_integral = userData.zaomeng_integral - num*20;
+				const params = {
+					item: userData,
+					success: "",
+					error: "服务器错误",
+					children: "unionArea",
+					backFun: ["init"]
+				}
+				this.$emit("submitUser", params);
 				uniCloud.callFunction({
 					name: "create_lucky",
 					data: {count: num, phone: this.user.phone, user_id: this.user._id},
@@ -278,11 +293,13 @@
 						this.animateFun(num, 0, ul);
 						this.$nextTick(() => {
 							document.querySelector("video").playbackRate = 1;
+							this.canClickLucky = true;
 						})
 					},
 					fail: (err) => {
 						this.$nextTick(() => {
 							document.querySelector("video").playbackRate = 1;
+							this.canClickLucky = true;
 						})
 						console.log("fail")
 						console.log(err)
@@ -438,6 +455,9 @@
 			}
 		},
 		created() {
+			this.init();
+		},
+		activated() {
 			this.init();
 		}
 	}
