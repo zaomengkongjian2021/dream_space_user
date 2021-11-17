@@ -23,11 +23,28 @@
 			</div>
 		</el-card>
 		<el-drawer
-		  title="我是标题"
+		  :title="drawerTitle"
 		  :visible.sync="subjectDrawer"
 		  :direction="direction"
-		  size="100%">
-		  <span>我来啦!</span>
+		  size="100%"
+		  class="subjects-drawer">
+		  <div class="progress">
+			  <span>完成度：</span>
+			  <el-progress :percentage="drawerData.progress"></el-progress>
+		  </div>
+		  <div class="award">
+			  <span>奖 励：</span>
+			  <span>{{drawerData.award}}</span>
+		  </div>
+		  <div class="subjects">
+			  <el-card v-for="(item,index) in subjectsList">
+				  <p>{{(index+1)+"、"+item.name+"（"+item.score+"点积分）"}}</p>
+				  <textarea placeholder="请输入您的描述" maxlength="1000" v-model="item.input_answer"></textarea>
+				  <p v-if="item.show_answer">{{"参考描述："+item.answer}}</p>
+				  <p class="view-btn"><el-button @click="showAnswer(item)">{{item.button_text}}</el-button></p>
+			  </el-card>
+		  </div>
+			<el-button class="submit-btn" @click="submitSujects">提交</el-button>
 		</el-drawer>
 	</view>
 </template>
@@ -46,7 +63,9 @@
 				menuTwoActive: "",
 				menuThree: [],
 				menuThreeActive: "",
-				subjects: []
+				subjectsList: [],
+				drawerTitle: "",
+				drawerData: {}
 			}
 		},
 		methods: {
@@ -115,14 +134,43 @@
 				this.menuThreeActive = "";
 				this.getMenuThree(item.type);
 			},
-			//获取题目(
-			getSubjects(){
-				
-			},
 			//打开题目列表
 			openSubject(item){
 				this.menuThreeActive = item._id;
+				this.drawerTitle = item.name;
+				this.drawerData = item;
 				this.subjectDrawer = true;
+				this.getSubjects(item._id);
+			},
+			//获取题目
+			getSubjects(parentId){
+				this.subjectsList = [];
+				this.loading = true;
+				db.collection("subjects_list").where({parent_id: parentId}).get().then(res => {
+					this.loading = false;
+					if(res.result.data.length){
+						this.subjectsList = res.result.data;
+					}else{
+						this.$message.warning("暂无题目");
+					}
+				}).catch(err => {
+					this.loading = false;
+					this.$message.error("服务器错误");
+				})
+			},
+			//显示参考答案
+			showAnswer(item){
+				if(item.show_answer){
+					item.show_answer = false;
+					item.button_text = "查看参考描述";
+				}else{
+					item.show_answer = true;
+					item.button_text = "隐藏参考描述";
+				}
+			},
+			//提交
+			submitSujects(){
+				
 			},
 			init(){
 				this.getMenuOne();
