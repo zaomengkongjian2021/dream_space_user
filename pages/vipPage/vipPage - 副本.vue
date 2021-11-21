@@ -20,7 +20,7 @@
 		<!-- 联盟成员页面 -->
 		<el-row class="union-box vip-model" v-if="isVip">
 			<div class="vip-box">
-				<el-col class="vip-title" :span="24">成员信息：<i class="el-icon-question" @click="unionAreaCountDialogVisible=true;"></i></el-col>
+				<el-col class="vip-title" :span="24">成员信息：<i class="el-icon-question" @click="vipPageCountDialogVisible=true;"></i></el-col>
 				<el-col :span="24">
 					<a>令牌到期时间：</a><span>{{dueToTime}}</span>
 				</el-col>
@@ -172,7 +172,7 @@
 		<!-- 联盟福利介绍 -->
 		<el-dialog
 			title="联盟福利"
-			:visible.sync="unionAreaCountDialogVisible"
+			:visible.sync="vipPageCountDialogVisible"
 			width="90%">
 			<el-row class="dialog-detail">
 				<p>1、联盟成员可开启<span>联盟任务</span>。</p>
@@ -237,7 +237,7 @@
 				btnName: "购买联盟令牌",
 				oneYuanDetailDialogVisible: false,
 				blindChooseDetailDialogVisible: false,
-				unionAreaCountDialogVisible: false,
+				vipPageCountDialogVisible: false,
 				chooseRechargeDialogVisible: false,
 				offlineDetailDialogVisible: false,
 				dueToTime: 0,
@@ -280,7 +280,7 @@
 					item: userData,
 					success: "",
 					error: "服务器错误",
-					children: "unionArea",
+					children: "vipPage",
 					backFun: ["init"]
 				}
 				this.$emit("submitUser", params);
@@ -383,7 +383,7 @@
 						item: item,
 						success: "欢迎加入造梦联盟",
 						error: "加入失败",
-						children: "unionArea",
+						children: "vipPage",
 						backFun: ["init"]
 					}
 					this.$emit("submitUser", params);
@@ -447,7 +447,7 @@
 						item: item,
 						success: "您的联盟令牌已到期",
 						error: "服务器错误",
-						children: "unionArea",
+						children: "vipPage",
 						backFun: ["init"]
 					}
 					this.$emit("submitUser", params);

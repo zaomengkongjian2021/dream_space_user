@@ -31,9 +31,15 @@
 			}
 		},
 		{
-			"path": "pages/unionArea/unionArea",
+			"path": "pages/vipPage/vipPage",
 			"style": {
-				"navigationBarTitleText": "联盟中心"
+				"navigationBarTitleText": "会员中心"
+			}
+		},
+		{
+			"path": "pages/vipPage/visitor",
+			"style": {
+				"navigationBarTitleText": "会员中心"
 			}
 		},
 		{

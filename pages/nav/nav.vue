@@ -2,8 +2,9 @@
 	<view class="nav">
 		<div class="nav-main">
 			<goodsList ref="goodsList" v-if="activeNav=='goodsList'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></goodsList>
-			<unionArea ref="unionArea" v-else-if="activeNav=='unionArea'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></unionArea>
 			<task ref="task" v-else-if="activeNav=='task'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></task>
+			<vipPage ref="vipPage" v-else-if="activeNav=='vipPage' && isVip" @updateUser="updateUser" @submitUser="submitUser" :user="user"></vipPage>
+			<visitor ref="visitor" v-else-if="activeNav=='vipPage' && !isVip" @updateUser="updateUser" @submitUser="submitUser" :user="user"></visitor>
 			<myCenter ref="myCenter" v-else-if="activeNav=='myCenter'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></myCenter>
 		</div>
 		<div class="nav-footer">
@@ -21,30 +22,38 @@
 <script>
 	const db = uniCloud.database();
 	import goodsList from "../goodsList/goodsList";
-	import unionArea from "../unionArea/unionArea";
+	import vipPage from "../vipPage/vipPage";
+	import visitor from "../vipPage/visitor";
 	import myCenter from "../myCenter/myCenter";
 	import task from "../task/task";
 	export default{
 		components: {
 			goodsList,
-			unionArea,
-			myCenter,
-			task
+			task,
+			vipPage,
+			visitor,
+			myCenter
 		},
 		data(){
 			return {
 				navList: [
 					{name: "商品",icon: "el-icon-goods",id: "goodsList"},
-					{name: "联盟",icon: "el-icon-setting",id: "unionArea"},
 					{name: "任务",icon: "el-icon-tickets",id: "task"},
+					{name: "会员",icon: "el-icon-setting",id: "vipPage"},
 					{name: "我的",icon: "el-icon-menu",id: "myCenter"}
 				],
 				activeNav: "goodsList",
+				isVip: false,
 				user: ""
 			}
 		},
 		methods:{
 			tabModel(item){
+				if(item.id=="vipPage" && this.user.user_type=="vip"){
+					this.isVip = true;
+				}else{
+					this.isVip = false;
+				}
 				this.activeNav = item.id;
 			},
 			//更新用户信息到数据库
