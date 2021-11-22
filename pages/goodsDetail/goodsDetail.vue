@@ -129,7 +129,7 @@
 				<el-input v-model="addAddressForm.phone" placeholder="请输入手机号码"></el-input>
 			</el-form-item>
 			<el-form-item label="收获地址:" prop="address">
-				<shopwind @confirm="chooseAddress"></shopwind>
+				<pickRegions :defaultRegion="defaultRegion" @getRegion="chooseAddress"></pickRegions>
 			</el-form-item>
 			<el-form-item label="街道/社区:" prop="speAddress" placeholder="请输入街道、社区、楼栋号">
 				<el-input v-model="addAddressForm.speAddress"></el-input>
@@ -142,11 +142,11 @@
 </template>
 
 <script>
-	import shopwind from "../../components/shopwind-multpicker/shopwind-multpicker.vue"
+	import pickRegions from "@/components/pick-regions/pick-regions.vue"
 	const db = uniCloud.database();
 	export default{
 		components:{
-			shopwind: shopwind
+			pickRegions
 		},
 		data(){
 			return {
@@ -183,6 +183,7 @@
 					phone: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
 					speAddress: [{ required: true, message: '请输入街道、社区、楼栋号', trigger: 'blur' }]
 				},
+				defaultRegion: ["广东省","广州市","番禺区"],//默认地址
 				choiceAddress: {},
 				experience: ""
 			}
