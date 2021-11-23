@@ -10,7 +10,12 @@
 					<span>{{item.name}}</span>
 				</p>
 			</el-aside>
-			<el-main>Main</el-main>
+			<el-main>
+				<vipWealText v-if="leftMenuActive == 'huiyuanfuli'"></vipWealText>
+				<vipOpen v-else-if="leftMenuActive == 'kaitonghuiyuan'"></vipOpen>
+				<vipAppointmenting v-else-if="leftMenuActive == 'woyaoyuyue'"></vipAppointmenting>
+				<vipAppointmented v-else-if="leftMenuActive == 'woyiyuyue'"></vipAppointmented>
+			</el-main>
 		</el-container>
 		
 		<!-- <el-row>
@@ -73,10 +78,18 @@
 </template>
 
 <script>
-	import pickRegions from "@/components/pick-regions/pick-regions.vue"
+	import pickRegions from "@/components/pick-regions/pick-regions.vue";
+	import vipWealText from "@/pages/vipPage/vipWealText.vue";
+	import vipOpen from "@/pages/vipPage/vipOpen.vue";
+	import vipAppointmented from "@/pages/vipPage/vipAppointmented.vue";
+	import vipAppointmenting from "@/pages/vipPage/vipAppointmenting.vue";
 	const db = uniCloud.database();
 	export default{
 		components:{
+			vipWealText,
+			vipOpen,
+			vipAppointmented,
+			vipAppointmenting,
 			pickRegions
 		},
 		props:{

@@ -34,10 +34,10 @@
 		data(){
 			return {
 				navList: [
-					{name: "商品",icon: "el-icon-goods",id: "goodsList"},
-					{name: "任务",icon: "el-icon-tickets",id: "task"},
-					{name: "会员",icon: "el-icon-setting",id: "vipPage"},
-					{name: "我的",icon: "el-icon-menu",id: "myCenter"}
+					{name: "商品",icon: "el-icon-s-goods",id: "goodsList"},
+					{name: "任务",icon: "el-icon-s-order",id: "task"},
+					{name: "会员",icon: "el-icon-s-finance",id: "vipPage"},
+					{name: "我的",icon: "el-icon-user-solid",id: "myCenter"}
 				],
 				activeNav: "goodsList",
 				user: ""

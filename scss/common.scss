@@ -163,14 +163,14 @@ uni-page-body, uni-page-refresh{
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				color: #606266;
+				color: rgba(251,102,0,0.6);
 				font-size: 14px;
 				i{
 					font-size: 26px;
 				}
 			}
 			p.active-nav{
-				color: #0080ff;
+				color: #fb6600;
 				font-weight: 700;
 			}
 		}
@@ -367,8 +367,76 @@ uni-page-body, uni-page-refresh{
 					}
 				}
 				p.active{
-					background: rgba(251,102,0,0.8);
+					background: rgba(255,255,255,0.3);
 				}
+			}
+			.el-main{
+				background-color: rgba(251,102,0,0.1);
+			}
+		}
+	}
+	/*会员福利介绍页面*/
+	.vip-weal-text{
+		height: 100%;
+		.el-col{
+			line-height: 26px;
+			margin-bottom: 15px;
+			color: #666666;
+			span{
+				color: #d01012;
+				font-weight: 700;
+			}
+		}
+		.title{
+			font-size: 15px;
+			color: #000000 !important;
+		}
+	}
+	/*开通会员页面*/
+	.vip-open{
+		height: 100%;
+		.el-col{
+			margin-bottom: 25px;
+			color: #666666;
+			span{
+				display: block;
+			}
+			.type-tilte{
+				margin-bottom: 5px;
+			}
+			.el-input__inner{
+				background: rgba(255,255,255,0.7);
+				border: none;
+				margin-bottom: 5px;
+			}
+			a{
+				color: #007AFF;
+				font-size: 15px;
+			}
+		}
+		.title{
+			font-size: 15px;
+			color: #000000 !important;
+		}
+		.address{
+			input{
+				font-size: 14px;
+				background: rgba(255,255,255,0.7);
+				margin-top: 5px;
+				padding: 5px 10px;
+			}
+		}
+		.submit-btn{
+			margin-top: 20px;
+			text-align: center;
+			.el-button{
+				padding: 10px 20px;
+				border: 1px solid #fb6600;
+				color: #ffffff;
+				background: #fb6600;
+			}
+			.el-button:active{
+				opacity: 0.6;
 			}
 		}
 	}
