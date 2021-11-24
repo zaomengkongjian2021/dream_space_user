@@ -1,12 +1,17 @@
 <template>
 	<view class="vip-weal-text">
-		<el-row>
+		<el-row :gutter="10">
 			<el-col class="title"><i class="el-icon-connection"></i>会员福利</el-col>
-			<el-col>1、会员可<span>免费使用</span>线下资源，<span>免费参加</span>线下活动。</el-col>
-			<el-col>2、会员可在<span>线下使用造梦积分</span>进行部分<span>消费</span>。</el-col>
-			<el-col>3、会员购买造梦积分、任务获得<span>造梦积分，均为双倍</span>。</el-col>
-			<el-col>4、会员可<span>参与抽奖</span>，抽奖可获得任务积分（2~3倍）券、线上资源体验费（5~9折）券。</el-col>
-			<el-col>5、<span>推荐朋友</span>成功成为会员，推荐人是会员时<span>奖励造梦积分</span>。</el-col>
+			<el-col :span="12" style="height: 30px;line-height: 30px;color: #000000;text-align: center;font-size: 14px;">会员</el-col>
+			<el-col :span="12" style="height: 30px;line-height: 30px;color: #000000;text-align: center;font-size: 14px;">非会员</el-col>
+			<el-col :span="12" style="height: 65px;"><span>免费</span>使用线下资源，<span>不消耗</span>造梦积分</el-col>
+			<el-col :span="12" style="height: 65px;">使用线下资源<span>需要支付</span>造梦积分</el-col>
+			<el-col :span="12">购买造梦积分比例为<span>1：20</span></el-col>
+			<el-col :span="12">购买造梦积分比例为<span>1：10</span></el-col>
+			<el-col :span="12">完成任务获得<span>200%</span>造梦积分</el-col>
+			<el-col :span="12">完成任务获得<span>100%</span>造梦积分</el-col>
+			<el-col :span="12" style="height: 130px;">推荐朋友注册成功可<span>获得2元</span>押金奖励，推荐朋友成功加入会员可<span>获得4元</span>押金奖励，<span>可提现</span></el-col>
+			<el-col :span="12" style="height: 130px;">推荐朋友注册成功可<span>获得1元</span>押金奖励，推荐朋友成功加入会员可<span>获得2元</span>押金奖励，<span>不可提现</span></el-col>
 		</el-row>
 	</view>
 </template>

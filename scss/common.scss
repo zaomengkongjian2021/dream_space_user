@@ -379,9 +379,11 @@ uni-page-body, uni-page-refresh{
 	.vip-weal-text{
 		height: 100%;
 		.el-col{
-			line-height: 26px;
-			margin-bottom: 15px;
+			line-height: 24px;
+			border: 1px solid #dddddd;
+			height: 50px;
 			color: #666666;
+			font-size: 12px;
 			span{
 				color: #d01012;
 				font-weight: 700;
@@ -390,6 +392,9 @@ uni-page-body, uni-page-refresh{
 		.title{
 			font-size: 15px;
 			color: #000000 !important;
+			border: none;
+			margin-bottom: 15px;
+			height: 20px;
 		}
 	}
 	/*开通会员页面*/
@@ -398,9 +403,6 @@ uni-page-body, uni-page-refresh{
 		.el-col{
 			margin-bottom: 25px;
 			color: #666666;
-			span{
-				display: block;
-			}
 			.type-tilte{
 				margin-bottom: 5px;
 			}
@@ -408,6 +410,9 @@ uni-page-body, uni-page-refresh{
 				background: rgba(255,255,255,0.7);
 				border: none;
 				margin-bottom: 5px;
+			}
+			.el-radio{
+				line-height: 50px;
 			}
 			a{
 				color: #007AFF;
@@ -440,76 +445,6 @@ uni-page-body, uni-page-refresh{
 			}
 		}
 	}
-	
-	/*非会员页面*/
-	// .visitor{
-	// 	height: 100%;
-	// 	overflow: hidden;
-	// 	overflow-y: auto;
-	// 	.visitor-title{
-	// 		width: 150px;
-	// 		height: 30px;
-	// 		line-height: 30px;
-	// 		text-align: center;
-	// 		font-size: 15px;
-	// 		border: 2px solid rgba(251,102,0,1);
-	// 		border-radius: 5px;
-	// 		border-bottom: none;
-	// 		background: rgba(251,102,0,0.5);
-	// 		color: #FFFFFF;
-	// 	}
-	// 	.el-col{
-	// 		display: flex;
-	// 		width: 100%;
-	// 		height: 30px;
-	// 		justify-content: center;
-	// 		align-items: center;
-	// 		margin-top: 15px;
-	// 	}
-	// 	.vip-text{
-	// 		width: 90%;
-	// 		padding: 15px;
-	// 		border: 1px solid rgba(251,102,0,1);
-	// 		border-radius: 5px;
-	// 		background: rgba(251,102,0,0.5);
-	// 		box-sizing: border-box;
-	// 		span{
-	// 			color: #d01012;
-	// 		}
-	// 	}
-	// 	.open-vip-title{
-	// 		border: 2px solid rgba(0, 0, 0,0.1);
-	// 		border-radius: 5px;
-	// 		border-bottom: none;
-	// 		background: rgba(0, 0, 0, 0.03);
-	// 		color: #000000;
-	// 	}
-	// 	.open-vip{
-	// 		width: 90%;
-	// 		padding: 15px;
-	// 		border: 1px solid rgba(0, 0, 0,0.1);
-	// 		border-radius: 5px;
-	// 		background: rgba(0, 0, 0, 0.03);
-	// 		box-sizing: border-box;
-	// 		p{
-	// 			margin-bottom: 10px;
-	// 		}
-	// 		.type-tilte{
-	// 			display: block;
-	// 			margin-bottom: 5px;
-	// 		}
-	// 		.cost-text{
-	// 			font-size: 12px;
-	// 			display: block;
-	// 			a{
-	// 				font-size: 14px;
-	// 				color: #007AFF;
-	// 				font-weight: 700;
-	// 			}
-	// 		}
-	// 	}
-	// }
-	
 	
 	/*个人中心*/
 	.my-center{
