@@ -2,24 +2,31 @@
 	<view class="content" v-loading.fullscreen.lock="loading">
 		<div class="regist-box">
 			<div class="regist-row">
-				<span>用 户 名：</span>
-				<input type="number" placeholder="请输入手机号码" v-model.trim="userName"/>
+				<span>*手机号码：</span>
+				<input type="number" placeholder="请输入手机号码" v-model.trim="userPhone"/>
 			</div>
 			<div class="regist-row password-tips">
-				<span>密<i style="opacity: 0;">密密</i>码：</span>
+				<span>*密<i style="opacity: 0;">密密</i>码：</span>
 				<input type="password" placeholder="请输入密码" v-model.trim="password"/>
 			</div>
 			<div class="regist-row">
-				<span>确认密码：</span>
+				<span>*确认密码：</span>
 				<input type="password" placeholder="请输入密码" v-model.trim="surePassword"/>
 			</div>
 			<div class="regist-row">
-				<span>验 证 码：</span>
+				<span>*验 证 码：</span>
 				<input type="text" placeholder="请输入验证码" v-model.trim="verCode"/>
 				<canvas :style="{width:'100px',height:'30px',marginLeft:'10px'}" canvas-id="imgcanvas" @error="canvasIdErrorCallback" @click="refresh"></canvas>
 			</div>
 			<div class="regist-row">
-				<button class="regist-btn" type="default" @click="regist">注册</button>
+				<span>推 荐 人：</span>
+				<input type="number" placeholder="请输入推荐人手机号码" v-model.trim="referrer.phone"/>
+			</div>
+			<div class="treaty">
+				<el-checkbox v-model="treatyChecked">已阅并同意<a href="">《使用协议》</a>和<a href="">《隐私政策》</a></el-checkbox>
+			</div>
+			<div class="regist-row">
+				<el-button class="regist-btn" type="default" @click="regist">确定注册</el-button>
 			</div>
 		</div>
 	</view>
@@ -30,19 +37,28 @@
 	export default {
 		data(){
 			return {
-				userName: "",
+				userPhone: "",
 				password: "",
 				surePassword: "",
 				verCode: "",
-				loading: false
+				loading: false,
+				treatyChecked: false,
+				referrer: {
+					phone: "",
+					user_type: "visitor",
+					id: ""
+				}
 			}
 		},
 		methods:{
 			regist(){
 				let reg_phone = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;//校验手机的正则表达式
 				let reg_password = /^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]{8,18}$/;//校验密码，必须由字母、数字组成，区分大小写，8~18位
-				if(!this.userName){
-					this.$message.error("用户名不能为空");
+				if(!this.treatyChecked){
+					this.$message.error("请阅读《使用协议》和《隐私政策》");
+					return;
+				}else if(!this.userPhone){
+					this.$message.error("手机号码不能为空");
 					return;
 				}else if(!this.password){
 					this.$message.error("密码不能为空");
@@ -50,7 +66,7 @@
 				}else if(!this.surePassword){
 					this.$message.error("请输入确认密码");
 					return;
-				}else if(!reg_phone.test(this.userName)){
+				}else if(!reg_phone.test(this.userPhone)){
 					this.$message.error("请正确填写手机号");
 					return;
 				}else if(!reg_password.test(this.password)){
@@ -65,11 +81,52 @@
 				}else if (this.verCode.toLowerCase() != uni.getStorageSync('imgcode').toLowerCase()) {
 					this.$message.error("验证码不正确");
 					return;
+				}else if(this.referrer.phone && !reg_phone.test(this.referrer.phone)){
+					this.$message.error("请正确填写推荐人手机号码");
+					return;
 				}
 				this.loading = true;
+				//查询推荐人是否存在，及推荐人身份
+				if(this.referrer.phone){
+					db.collection("user_list")
+						.where({phone: this.referrer.phone}).get().then(res => {
+							this.loading = false;
+							if(res.result.data.length > 0){
+								//推荐人存在，继续查询推荐人是否会员
+								db.collection("permission").where({phone: this.referrer.phone}).get().then(res => {
+									if(res.result.data.length > 0){
+										this.referrer.user_type = res.result.data[0].user_type;
+										this.referrer.id = res.result.data[0]._id;
+									}
+									this.searchPhone();
+								}).catch(err => {
+									this.$message.error("服务器错误");
+								})
+							}else{
+								this.$confirm('推荐人不存在, 是否继续?', '提示', {
+									confirmButtonText: '继续',
+									cancelButtonText: '取消',
+									type: 'warning'
+								}).then(() => {
+								  this.searchPhone();
+								}).catch(() => {
+									this.loading = false;
+								});
+							}
+						}).catch(err => {
+							this.loading = false;
+							this.$message.error("服务器错误");
+						})
+				}else{
+					this.searchPhone();
+				}
+			},
+			//查询用户名是否存在
+			searchPhone(){
 				//查询用户名是否存在
-				db.collection('user_list')
-					.where({phone: this.userName})
+				this.loading = true;
+				db.collection("user_list")
+					.where({phone: this.userPhone})
 					.get()
 					.then((res)=>{
 						this.loading = false;
@@ -84,21 +141,25 @@
 						this.$message.error("注册失败，请重新注册");
 					})
 			},
+			//保存新增用户
 			save(){
 				this.loading = true;
-				db.collection('user_list').add({
-					phone: this.userName,
-					password: this.$md5(this.password),
-					user_type: "visitor",
-					no_overdue: false
-				}).then((res) => {
-					this.loading = false;
-					this.$message.success("注册成功");
-					this.$router.push("/pages/index/index");
-				}).catch((err)=>{
-					this.loading = false;
-					this.$message.error("注册失败，请重新注册");
-				})
+				uniCloud.callFunction({
+				    name: 'add_user',
+				    data: {
+						phone: this.userPhone,
+						password: this.$md5(this.password),
+						referrer: this.referrer
+					}
+				}).then(res => {
+					this.loading = true;
+					if(res.result.success){
+						this.$message.success("恭喜您注册成功");
+						this.$router.push("/pages/index/index");
+					}else{
+						this.$message.error(res.result.message);
+					}
+				});
 			},
 			//生成图形验证码
 			initCanvas(){
@@ -169,6 +230,7 @@
 <style lang="scss" scoped>
 	.password-tips{
 		&:after{
+			display: block;
 			content: "请输入8~18位密码，必须由字母、数字组成，区分大小写";
 			font-size: 8px;
 			color: #dddddd;

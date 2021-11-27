@@ -19,13 +19,13 @@
 			}
 		},
 		{
-			"path": "pages/goodsList/goodsList",
+			"path": "pages/rent/goodsList",
 			"style": {
 				"navigationBarTitleText": "商城"
 			}
 		},
 		{
-			"path": "pages/goodsDetail/goodsDetail",
+			"path": "pages/rent/goodsDetail",
 			"style": {
 				"navigationBarTitleText": "商品详情"
 			}

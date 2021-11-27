@@ -1,7 +1,8 @@
 <template>
 	<view class="nav">
 		<div class="nav-main">
-			<goodsList ref="goodsList" v-if="activeNav=='goodsList'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></goodsList>
+			<rentGoodsList ref="rent_goodsList" v-if="activeNav=='rent_goodsList'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></rentGoodsList>
+			<storeGoodsList ref="store_goodsList" v-if="activeNav=='store_goodsList'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></storeGoodsList>
 			<task ref="task" v-else-if="activeNav=='task'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></task>
 			<vipPage ref="vipPage" v-else-if="activeNav=='vipPage'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></vipPage>
 			<myCenter ref="myCenter" v-else-if="activeNav=='myCenter'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></myCenter>
@@ -20,13 +21,15 @@
 
 <script>
 	const db = uniCloud.database();
-	import goodsList from "../goodsList/goodsList";
+	import rentGoodsList from "../rent/goodsList";
+	import storeGoodsList from "../store/goodsList";
 	import vipPage from "../vipPage/vipPage";
 	import myCenter from "../myCenter/myCenter";
 	import task from "../task/task";
 	export default{
 		components: {
-			goodsList,
+			rentGoodsList,
+			storeGoodsList,
 			task,
 			vipPage,
 			myCenter
@@ -34,12 +37,13 @@
 		data(){
 			return {
 				navList: [
-					{name: "商品",icon: "el-icon-s-goods",id: "goodsList"},
+					{name: "租借",icon: "el-icon-box",id: "rent_goodsList"},
+					{name: "商城",icon: "el-icon-goods",id: "store_goodsList"},
 					{name: "任务",icon: "el-icon-s-order",id: "task"},
 					{name: "会员",icon: "el-icon-s-finance",id: "vipPage"},
 					{name: "我的",icon: "el-icon-user-solid",id: "myCenter"}
 				],
-				activeNav: "goodsList",
+				activeNav: "",
 				user: ""
 			}
 		},
@@ -112,9 +116,11 @@
 		},
 		created() {
 			this.user = JSON.parse(this.getSessionStorage("user"));
-			window.addEventListener("userChange", () => {
-				this.user = JSON.parse(this.getSessionStorage("user"));
-			})
+			if(this.$route.query.page){
+				this.activeNav = this.$route.query.page;
+			}else{
+				this.activeNav = "rent_goodsList";
+			}
 		}
 	}
 </script>

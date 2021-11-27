@@ -1,6 +1,18 @@
 <template>
 	<view class="goods-list" v-loading.fullscreen.lock="loading">
 		<el-col :span="24" class="goods-search">
+			<el-select
+			    v-model="filterValue"
+				clearable
+			    placeholder="类型筛选"
+				@change="goSearch">
+			    <el-option
+			      v-for="item in filterOptions"
+			      :key="item.type"
+			      :label="item.name"
+			      :value="item.type">
+			    </el-option>
+			</el-select>
 			<el-input placeholder="请输入内容" v-model="searchValue" @change="goSearch" suffix-icon="el-icon-search"/>
 		</el-col>
 		<el-row class="list-box">
@@ -22,7 +34,7 @@
 				</el-card>
 			</el-col>
 		</el-row>
-		<p v-if="!experience" class="integral-shop" @click="shopDialogVisible = true">
+		<p class="integral-shop" @click="shopDialogVisible = true">
 			<img src="../../static/shop.jpg" alt="">
 			<span>购买积分</span>
 		</p>
@@ -86,60 +98,58 @@
 				integralCount: 10,
 				integralBuyNum: 1,
 				addGoods: [],
-				experience: ""
+				filterValue: "",
+				filterOptions: []
 			}
 		},
 		methods:{
-			getGoods(val){
+			//获取租赁商品类型
+			getGoodsType(){
+				this.filterOptions = [];
+				db.collection("rent_goods_type").get().then(res => {
+					if(res.result.data.length){
+						this.filterOptions = res.result.data;
+					}
+				}).catch(err => {})
+			},
+			//获取租赁商品
+			getGoods(){
 				this.addGoods = [];
 				this.goodsDatas = [];
 				this.loading = true;
-				if(!this.experience){
-					db.collection("goods").get().then(res => {
-						this.loading = false;
-						if(res.result.data.length){
-							this.addGoods = res.result.data;
-							if(!val){
-								this.goodsDatas = res.result.data;
-							}else{
-								this.addGoods.forEach(item => {
-									if(item.name.indexOf(val) > -1){
-										this.goodsDatas.push(item);
-									}
-								})
-							}
+				db.collection("rent_goods").get().then(res => {
+					this.loading = false;
+					if(res.result.data.length){
+						this.addGoods = res.result.data;
+						if(!this.filterValue && !this.searchValue){
+							this.goodsDatas = res.result.data;
+						}else{
+							let filterData = [];
+							this.addGoods.forEach(item => {
+								if(this.filterValue && item.type==this.filterValue){
+									filterData.push(item);
+								}else if(!this.filterValue){
+									filterData.push(item);
+								}
+							})
+							filterData.forEach(item => {
+								if(this.searchValue && item.name.indexOf(this.searchValue) > -1){
+									this.goodsDatas.push(item);
+								}else if(!this.searchValue){
+									this.goodsDatas.push(item);
+								}
+							})
 						}
-					}).catch(err => {
-						this.loading = false;
-					})
-				}else{
-					db.collection("goods").where({type: this.experience.type}).get().then(res => {
-						this.loading = false;
-						if(res.result.data.length){
-							this.addGoods = res.result.data;
-							if(!val){
-								this.goodsDatas = res.result.data;
-							}else{
-								this.addGoods.forEach(item => {
-									if(item.name.indexOf(val) > -1){
-										this.goodsDatas.push(item);
-									}
-								})
-							}
-						}
-					}).catch(err => {
-						this.loading = false;
-					})
-				}
+					}
+				}).catch(err => {
+					this.loading = false;
+				})
 			},
 			goSearch(){
-				this.getGoods(this.searchValue);
+				this.getGoods();
 			},
 			openDetail(item){
-				let path = "/pages/goodsDetail/goodsDetail?id="+item._id;
-				if(this.experience){
-					path = path + "&experience=" + JSON.stringify(this.experience);
-				}
+				let path = "/pages/rent/goodsDetail?id="+item._id;
 				this.$router.push(path);
 			},
 			openBuyDiaog(p, c){
@@ -181,9 +191,7 @@
 				this.$emit("submitUser", params);
 			},
 			init(){
-				if(this.$route.query.experience){
-					this.experience = JSON.parse(this.$route.query.experience)
-				}
+				this.getGoodsType();
 				this.getGoods();
 			}
 		},
