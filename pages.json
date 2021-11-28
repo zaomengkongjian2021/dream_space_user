@@ -9,7 +9,9 @@
 		{
 			"path": "pages/regist/regist",
 			"style": {
-				"navigationBarTitleText": "注 册"
+				"navigationBarTitleText": "注 册",
+				"navigationBarBackgroundColor": "#FEC300",
+				"backgroundColor": "#FEC300"
 			}
 		},
 		{
@@ -58,8 +60,8 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "造梦空间",
-		"navigationBarBackgroundColor": "#fb6600",
-		"backgroundColor": "#fb6600",
-		"height": "44px"
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#FFFFFF",
+		"height": "35px"
 	}
 }

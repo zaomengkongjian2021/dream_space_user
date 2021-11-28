@@ -27,7 +27,10 @@ exports.main = async (event, context) => {
 		freeze_deposit: 0,
 		usable_deposit: 0,
 		integration: 0,
-		someone: []
+		someone: [],
+		vip_list: [],
+		new_user: "true",
+		resident_address: []
 	}).then(res => {});
 	back_data.addPermission = addPermission;
 	//推荐人存在时，需给推荐人送押金和积分

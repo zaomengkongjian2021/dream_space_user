@@ -18,26 +18,34 @@
 			<p class="detail-describe">{{goodsData.describe}}</p>
 			<el-row class="detail-message">
 				<el-col :span="24">
-					<span>专柜价格：</span>
-					<span style="color: #d01012;">{{"￥"+(goodsData.prich || "")}}</span>
+					<span>商品详情：</span>
+					<span style="color: #666666;font-size: 12px;">{{goodsData.detail}}</span>
 				</el-col>
 				<el-col :span="24">
-					<span>租赁：</span>
-					<span style="color: #80e010;">{{(goodsData.rent || "")+"积分/次"}}</span>
+					<span>专柜价格：</span>
+					<span style="color: #b2b2b2;">{{"￥"+(goodsData.prich || "")}}</span>
+				</el-col>
+				<el-col :span="24">
+					<span>租借：</span>
+					<span style="color: #ff6600;">{{(goodsData.rent || "")+"积分/次"}}</span>
 				</el-col>
 				<el-col :span="24" style="margin-bottom: 10px;">
 					<span>押金：</span>
-					<span style="color: #ffc107;">{{"￥"+(goodsData.deposit || "")}}</span>
+					<span style="color: #888888;">{{"￥"+(goodsData.deposit || "")}}</span>
+				</el-col>
+				<el-col :span="24">
+					<span>我的积分：</span>
+					<span style="color: #666666;">{{user.integration}}</span>
 				</el-col>
 				<el-col :span="24" style="margin-bottom: 10px;">
-					<span>商品详情：</span>
-					<span style="color: #666666;font-size: 12px;">{{goodsData.detail}}</span>
+					<span>我的可用押金：</span>
+					<span style="color: #666666;">{{"￥"+user.usable_deposit}}</span>
 				</el-col>
 			</el-row>
 		</view>
 		<el-row class="bottom-btn">
 			<el-col :span="24">
-				<el-button style="background: #fb6600;color: #FFFFFF;" @click="experienceOrder">立即体验</el-button>
+				<el-button style="background: #FEC300;color: #FFFFFF;" @click="experienceOrder">立即体验</el-button>
 			</el-col>
 		</el-row>
 		<el-dialog
@@ -293,9 +301,9 @@
 							name: "update_permission",
 							data: {
 								phone: this.user.phone,
+								_id: this.user.permission_id,
 								total_deposit: this.goodsData.deposit,
-								usable_deposit: this.goodsData.deposit,
-								_id: this.user.permission_id
+								usable_deposit: this.goodsData.deposit
 							}
 						}).then(res => {
 							this.loading = false;

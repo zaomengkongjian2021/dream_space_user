@@ -11,10 +11,10 @@
 				</p>
 			</el-aside>
 			<el-main>
-				<vipWealText v-if="leftMenuActive == 'huiyuanfuli'"></vipWealText>
-				<vipOpen v-else-if="leftMenuActive == 'kaitonghuiyuan'"></vipOpen>
-				<vipAppointmenting v-else-if="leftMenuActive == 'woyaoyuyue'"></vipAppointmenting>
-				<vipAppointmented v-else-if="leftMenuActive == 'woyiyuyue'"></vipAppointmented>
+				<vipWealText v-if="leftMenuActive == 'huiyuanfuli'" :user="user"></vipWealText>
+				<vipOpen v-else-if="leftMenuActive == 'kaitonghuiyuan'" :user="user"></vipOpen>
+				<vipAppointmenting v-else-if="leftMenuActive == 'woyaoyuyue'" :user="user"></vipAppointmenting>
+				<vipAppointmented v-else-if="leftMenuActive == 'woyiyuyue'" :user="user"></vipAppointmented>
 			</el-main>
 		</el-container>
 	</view>
@@ -50,29 +50,7 @@
 					{name: "我要预约",id: "woyaoyuyue",icon: "el-icon-chat-line-round"},
 					{name: "我已预约",id: "woyiyuyue",icon: "el-icon-tickets"},
 				],
-				leftMenuActive: "",
-				outValue: [],
-				outProjects: [
-					{name: "足球",_id: "11"},
-					{name: "篮球",_id: "22"},
-					{name: "排球",_id: "33"},
-					{name: "羽毛球",_id: "44"},
-					{name: "乒乓球",_id: "55"},
-					{name: "水球",_id: "66"}
-				],
-				outTotalCost: 0,
-				inValue: [],
-				inProjects: [
-					{name: "乐高",_id: "11"},
-					{name: "游乐园",_id: "22"},
-					{name: "vr眼镜",_id: "33"},
-					{name: "读书会",_id: "44"},
-					{name: "科学实验",_id: "55"},
-					{name: "手游馆",_id: "66"}
-				],
-				inTotalCost: 0,
-				userAddress: "",
-				defaultRegion: ["广东省","广州市","番禺区"],//默认地址
+				leftMenuActive: ""
 			}
 		},
 		methods:{
@@ -80,20 +58,35 @@
 			leftMenuTab(item){
 				this.leftMenuActive = item.id;
 			},
-			chooseAddress(back){
-				this.userAddress = "";
-				back.forEach(item => {
-					this.userAddress += (item.name+"，")
-				})
+			//获取用户身份权限
+			getUserPermission(){
+				db.collection('permission')
+					.where({phone: this.user.phone})
+					.get()
+					.then((res)=>{
+						if(res.result.data.length > 0){
+							const permission = res.result.data[0];
+							this.user.permission_id = permission._id;
+							delete permission._id;
+							Object.assign(this.user, permission);
+						}
+						this.judgeUser();
+					}).catch((err) => {
+						this.$message.error("服务器错误");
+						this.judgeUser();
+					})
 			},
-			init(){
+			judgeUser(){
 				if(this.user.user_type == "visitor"){
 					this.leftMenuActive = "huiyuanfuli";
-				}else if(this.user.user_type=="vip" && !this.user.no_overdue){
-					this.leftMenuActive = "kaitonghuiyuan";
-				}else{
+				}else if(this.user.user_type=="vip"){
 					this.leftMenuActive = "woyaoyuyue";
+				}else{
+					this.leftMenuActive = "kaitonghuiyuan";
 				}
+			},
+			init(){
+				this.getUserPermission();
 			}
 		},
 		created() {

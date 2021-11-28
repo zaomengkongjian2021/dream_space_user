@@ -5,14 +5,15 @@ exports.main = async (event, context) => {
 	let back_data = {};
 	const userData = await db.collection("permission").where({phone: event.phone}).get();
 	let item = userData.data[0];
-	for(let key in item){
-		if(event[key]){
-			if(typeof item[key] == "number"){
-				item[key] = item[key]+event[key];
-			}else{
-				item[key] = event[key];
+	if(item.vip_list.length){
+		item.vip_list.forEach((t, i) => {
+			if(t.end_time <= (new Date).getTime()){
+				item.vip_list.splice(i, 1); 
 			}
-		}
+		})
+	}
+	if(item.vip_list.length <= 0){
+		item.user_type = "visitor";
 	}
 	const id = item._id;
 	delete item._id;

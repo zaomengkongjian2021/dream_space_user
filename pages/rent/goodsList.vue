@@ -19,17 +19,10 @@
 			<el-col :span="12" v-for="(item,index) in goodsDatas" :key="item._id">
 				<el-card class="goodsList-card">
 					<img :src="item.img[0]" alt="" @click="openDetail(item)"/>
-					<p class="goods-describe">{{item.describe}}</p>
 					<p class="goods-name">{{item.name}}</p>
+					<p class="goods-describe">{{item.describe}}</p>
 					<p class="goods-monny">
-						<!-- <a class="buy-monny">
-							<span>购买价：</span>
-							<span>￥{{parseInt(item.deposit)}}</span>
-						</a> -->
-						<a>
-							<span>体验：</span>
-							<span>{{item.rent+"积分/次(7天)"}}</span>
-						</a>
+						<a>{{item.rent+"积分/次(7天)"}}</a>
 					</p>
 				</el-card>
 			</el-col>
@@ -43,7 +36,7 @@
 		  :visible.sync="shopDialogVisible"
 		  width="90%">
 		  <el-row class="integral-shop-detail">
-				<el-col :span="24" class="tips"><i class="el-icon-warning"></i>联盟成员购买可获得<span>1.5倍造梦积分</span></el-col>
+				<el-col :span="24" class="tips"><i class="el-icon-warning"></i>会员购买可获得<span>2倍造梦积分</span></el-col>
 				<el-col :span="11">
 					<p class="top" @click="openBuyDiaog(1, 10)"><span>10</span><span>积分</span></p>
 					<p class="bottom"><span>￥</span><span>1</span></p>

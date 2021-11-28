@@ -13,6 +13,7 @@
 				<el-button class="login-btn" type="default" @click="login">登 录</el-button>
 			</div>
 			<div class="login-row">
+				<a style="text-align: left;" @click="openRegist">忘记密码？</a>
 				<a @click="openRegist">账号注册</a>
 			</div>
 		</div>
@@ -59,12 +60,34 @@
 				  }).then(res => {
 					  this.loading = false;
 					  if(res.result.success){
-						this.setSessionStorage("user", JSON.stringify(res.result.data[0]));
-						this.$router.push("/pages/nav/nav?page=rent_goodsList");
+						this.checkVip(res);
 					  }else{
 						  this.$message.error(res.result.message);
 					  }
 				  });
+			},
+			//校验vip权限
+			checkVip(userData){
+				//校验vip权限
+				uniCloud.callFunction({
+					name: "check_vip",
+					data: {
+						phone: this.userPhone
+					}
+				}).then(res => {
+					console.log(res)
+					if(res.result.updated){
+						this.setSessionStorage("user", JSON.stringify(userData.result.data[0]));
+						this.$router.push("/pages/nav/nav?page=vipPage");
+					}else{
+						this.$message.warning("权限校验失败，请重试");
+					}
+				}).catch(err => {
+					console.log(err)
+					this.$message.warning("权限校验失败，请重试");
+				})
+				
+					
 			},
 			openRegist(){
 				this.$router.push("/pages/regist/regist");

@@ -37,11 +37,11 @@
 		data(){
 			return {
 				navList: [
+					{name: "会员",icon: "el-icon-collection-tag",id: "vipPage"},
+					{name: "任务",icon: "el-icon-document",id: "task"},
 					{name: "租借",icon: "el-icon-box",id: "rent_goodsList"},
 					{name: "商城",icon: "el-icon-goods",id: "store_goodsList"},
-					{name: "任务",icon: "el-icon-s-order",id: "task"},
-					{name: "会员",icon: "el-icon-s-finance",id: "vipPage"},
-					{name: "我的",icon: "el-icon-user-solid",id: "myCenter"}
+					{name: "我的",icon: "el-icon-user",id: "myCenter"}
 				],
 				activeNav: "",
 				user: ""
