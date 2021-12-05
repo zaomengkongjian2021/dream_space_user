@@ -170,15 +170,17 @@
 					name: ""
 				};
 				back.forEach((item, index) => {
-					if(index == back.length-1){
-						this.userAddress.name += item.name;
-					}else{
+					if(index == 0){
 						this.userAddress.name += (item.name+",")
+					}else if(index == 1){
+						this.userAddress.name += item.name;
 					}
-					this.userAddress.back.push({
-						code: item.code,
-						name: item.name
-					})
+					if(index != 2){
+						this.userAddress.back.push({
+							code: item.code,
+							name: item.name
+						})
+					}
 				})
 			},
 			//点击确定按钮

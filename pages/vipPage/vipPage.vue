@@ -13,7 +13,7 @@
 			<el-main>
 				<vipWealText v-if="leftMenuActive == 'huiyuanfuli'" :user="user"></vipWealText>
 				<vipOpen v-else-if="leftMenuActive == 'kaitonghuiyuan'" :user="user"></vipOpen>
-				<vipAppointmenting v-else-if="leftMenuActive == 'woyaoyuyue'" :user="user"></vipAppointmenting>
+				<vipAppointmenting v-else-if="leftMenuActive == 'woyaoyuyue'" :user="user" @tabLeftMenu="leftMenuTab"></vipAppointmenting>
 				<vipAppointmented v-else-if="leftMenuActive == 'woyiyuyue'" :user="user"></vipAppointmented>
 			</el-main>
 		</el-container>

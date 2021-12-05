@@ -4,7 +4,7 @@ exports.main = async (event, context) => {
 	//event为客户端上传的参数
 	let back_data = {};
 	const userData = await db.collection("permission").where({phone: event.phone}).get();
-	const orderData = await db.collection("make_appointment_orders").where({phone: event.phone}).get();
+	const orderData = await db.collection("appointment_orders").where({phone: event.phone}).get();
 	//将预约单分类整理，便于下面查找
 	let orderObj = {
 		out: {},
@@ -27,7 +27,7 @@ exports.main = async (event, context) => {
 					//校验所有预约单中是否有该项目的，没有则延长1个月，再校验延长后是否也过期
 					const end = t.end_time + 30*24*60*60*1000;
 					if(end <= (new Date()).getTime()){
-						item.vip_list.splice(i, 1); 
+						item.vip_list.splice(i, 1);
 					}else if(t.extended == "false"){
 						t.end_time = end;
 						t.extended = "true";
