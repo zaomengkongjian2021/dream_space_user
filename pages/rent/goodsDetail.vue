@@ -291,7 +291,7 @@
 					}, 1000)
 				}else if(this.user.usable_deposit < this.goodsData.deposit){
 					//支付押金
-					this.$confirm("您的押金余额不足，将支付押金"+this.goodsData.deposit+"元，是否确定？", '提示', {
+					this.$confirm("您的押金余额不足，将支付押金"+(this.goodsData.deposit-this.user.usable_deposit)+"元，是否确定？", '提示', {
 						confirmButtonText: '确定',
 						cancelButtonText: '取消',
 						type: 'warning'
@@ -302,16 +302,16 @@
 							data: {
 								phone: this.user.phone,
 								_id: this.user.permission_id,
-								total_deposit: this.goodsData.deposit,
-								usable_deposit: this.goodsData.deposit
+								total_deposit: this.goodsData.deposit - this.user.usable_deposit,
+								usable_deposit: this.goodsData.deposit - this.user.usable_deposit
 							}
 						}).then(res => {
 							this.loading = false;
 							console.log(res);
 							if(res.result.updated){
 								this.$message.success("支付成功");
-								this.user.total_deposit = this.user.total_deposit + this.goodsData.deposit;
-								this.user.usable_deposit = this.user.usable_deposit + this.goodsData.deposit;
+								this.user.total_deposit = this.user.total_deposit + this.goodsData.deposit - this.user.usable_deposit;
+								this.user.usable_deposit = this.user.usable_deposit + this.goodsData.deposit - this.user.usable_deposit;
 							}else{
 								this.$message.error("支付失败");
 							}

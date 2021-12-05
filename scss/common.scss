@@ -178,7 +178,7 @@ uni-page-body, uni-page-refresh{
 			align-items: center;
 			justify-content: space-between;
 			padding: 3px 8%;
-			box-shadow: 1px 2px 2px 2px #666666;
+			border-top: 1px solid #b2b2b2;
 			background: #FFFFFF;
 			p{
 				display: flex;
@@ -465,6 +465,7 @@ uni-page-body, uni-page-refresh{
 				border: 1px solid #DCDFE6;
 				margin-top: 5px;
 				padding: 5px 10px;
+				border-radius: 5px;
 			}
 		}
 		.submit-btn{
@@ -1041,6 +1042,56 @@ uni-page-body, uni-page-refresh{
 			color: #FFFFFF;
 		}
 	}
+}
+.el-message-box__message .myvip-list-p{
+	width: 100%;
+	margin-bottom: 10px;
+	span{
+		display: block;
+	}
+	span:nth-of-type(2){
+		padding-left: 22px;
+		font-size: 12px;
+		color: #ff6600;
+	}
+}
+/*预约页面*/
+.vip-appointmenting{
+	.input-placeholder{
+		font-size: 14px;
+	}
+	.show-address{
+		border: 1px solid #DCDFE6;
+		border-radius: 5px;
+		padding: 5px 10px;
+		font-size: 14px;
+	}
+	.collapse{
+		margin-top: 20px;
+		.resource-item{
+			border: 1px solid #d5d5d5;
+			border-radius: 10px;
+			padding: 5px 10px;
+			.title{
+				font-size: 14px;
+				display: flex;
+				justify-content: space-between;
+				.title-text{
+					font-weight: 700;
+					color: #007AFF;
+				}
+				.remain{
+					a{
+						color: #ff6600;
+					}
+				}
+			}
+			.time{
+				color: #888888;
+			}
+		}
+	}
+	
 }
 @keyframes xuanzhuan1{
 	0%{transform: rotate(0deg);}

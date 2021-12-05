@@ -2,7 +2,7 @@
 	<view class="nav">
 		<div class="nav-main">
 			<rentGoodsList ref="rent_goodsList" v-if="activeNav=='rent_goodsList'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></rentGoodsList>
-			<storeGoodsList ref="store_goodsList" v-if="activeNav=='store_goodsList'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></storeGoodsList>
+			<!-- <storeGoodsList ref="store_goodsList" v-if="activeNav=='store_goodsList'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></storeGoodsList> -->
 			<task ref="task" v-else-if="activeNav=='task'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></task>
 			<vipPage ref="vipPage" v-else-if="activeNav=='vipPage'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></vipPage>
 			<myCenter ref="myCenter" v-else-if="activeNav=='myCenter'" @updateUser="updateUser" @submitUser="submitUser" :user="user"></myCenter>
@@ -40,7 +40,7 @@
 					{name: "会员",icon: "el-icon-collection-tag",id: "vipPage"},
 					{name: "任务",icon: "el-icon-document",id: "task"},
 					{name: "租借",icon: "el-icon-box",id: "rent_goodsList"},
-					{name: "商城",icon: "el-icon-goods",id: "store_goodsList"},
+					// {name: "商城",icon: "el-icon-goods",id: "store_goodsList"},
 					{name: "我的",icon: "el-icon-user",id: "myCenter"}
 				],
 				activeNav: "",

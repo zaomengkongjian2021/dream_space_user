@@ -76,18 +76,12 @@
 					}
 				}).then(res => {
 					console.log(res)
-					if(res.result.updated){
-						this.setSessionStorage("user", JSON.stringify(userData.result.data[0]));
-						this.$router.push("/pages/nav/nav?page=vipPage");
-					}else{
-						this.$message.warning("权限校验失败，请重试");
-					}
+					this.setSessionStorage("user", JSON.stringify(userData.result.data[0]));
+					this.$router.push("/pages/nav/nav?page=vipPage");
 				}).catch(err => {
 					console.log(err)
 					this.$message.warning("权限校验失败，请重试");
 				})
-				
-					
 			},
 			openRegist(){
 				this.$router.push("/pages/regist/regist");
